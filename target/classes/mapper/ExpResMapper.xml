@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.njust.dao.baseDao.ExpResMapper" >
+  <resultMap id="BaseResultMap" type="com.njust.bean.baseBean.ExpRes" >
+    <constructor >
+      <idArg column="exp_res_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="expert_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="result_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    exp_res_id, expert_id, result_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from exp_res
+    where exp_res_id = #{expResId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from exp_res
+    where exp_res_id = #{expResId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.njust.bean.baseBean.ExpRes" >
+    insert into exp_res (exp_res_id, expert_id, result_id
+      )
+    values (#{expResId,jdbcType=BIGINT}, #{expertId,jdbcType=INTEGER}, #{resultId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.njust.bean.baseBean.ExpRes" >
+    insert into exp_res
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="expResId != null" >
+        exp_res_id,
+      </if>
+      <if test="expertId != null" >
+        expert_id,
+      </if>
+      <if test="resultId != null" >
+        result_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="expResId != null" >
+        #{expResId,jdbcType=BIGINT},
+      </if>
+      <if test="expertId != null" >
+        #{expertId,jdbcType=INTEGER},
+      </if>
+      <if test="resultId != null" >
+        #{resultId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.njust.bean.baseBean.ExpRes" >
+    update exp_res
+    <set >
+      <if test="expertId != null" >
+        expert_id = #{expertId,jdbcType=INTEGER},
+      </if>
+      <if test="resultId != null" >
+        result_id = #{resultId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where exp_res_id = #{expResId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.njust.bean.baseBean.ExpRes" >
+    update exp_res
+    set expert_id = #{expertId,jdbcType=INTEGER},
+      result_id = #{resultId,jdbcType=BIGINT}
+    where exp_res_id = #{expResId,jdbcType=BIGINT}
+  </update>
+</mapper>

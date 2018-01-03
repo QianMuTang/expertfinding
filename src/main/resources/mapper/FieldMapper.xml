@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.njust.dao.baseDao.FieldMapper" >
+  <resultMap id="BaseResultMap" type="com.njust.bean.baseBean.Field" >
+    <constructor >
+      <idArg column="fieid_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="field_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="field_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    fieid_id, field_name, field_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from field
+    where fieid_id = #{fieidId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from field
+    where fieid_id = #{fieidId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.njust.bean.baseBean.Field" >
+    insert into field (fieid_id, field_name, field_desc
+      )
+    values (#{fieidId,jdbcType=INTEGER}, #{fieldName,jdbcType=VARCHAR}, #{fieldDesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.njust.bean.baseBean.Field" >
+    insert into field
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fieidId != null" >
+        fieid_id,
+      </if>
+      <if test="fieldName != null" >
+        field_name,
+      </if>
+      <if test="fieldDesc != null" >
+        field_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fieidId != null" >
+        #{fieidId,jdbcType=INTEGER},
+      </if>
+      <if test="fieldName != null" >
+        #{fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldDesc != null" >
+        #{fieldDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.njust.bean.baseBean.Field" >
+    update field
+    <set >
+      <if test="fieldName != null" >
+        field_name = #{fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldDesc != null" >
+        field_desc = #{fieldDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where fieid_id = #{fieidId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.njust.bean.baseBean.Field" >
+    update field
+    set field_name = #{fieldName,jdbcType=VARCHAR},
+      field_desc = #{fieldDesc,jdbcType=VARCHAR}
+    where fieid_id = #{fieidId,jdbcType=INTEGER}
+  </update>
+</mapper>

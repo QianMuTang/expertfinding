@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="expertfinding_war_exploded">
+    <output-path>$PROJECT_DIR$/target/expertfinding_war_exploded</output-path>
+    <root id="root" />
+  </artifact>
+</component>
