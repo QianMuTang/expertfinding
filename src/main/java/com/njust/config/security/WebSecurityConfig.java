@@ -73,8 +73,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()   //允许所有用户访问"/"
 //                .antMatchers("/whoim").hasRole("ADMIN")//这就表示/whoim的这个资源需要有ROLE_ADMIN的这个角色才能访问。不然就会提示拒绝访问
-                .anyRequest().access("@rbacService.hasPermission(request,authentication)")//必须经过认证以后才能访问
-                //.anyRequest().authenticated()                  //其他地址的访问均需验证权限
+//                .anyRequest().access("@rbacService.hasPermission(request,authentication)")//必须经过认证以后才能访问
+                .anyRequest().authenticated()                  //其他地址的访问均需验证权限
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")  //退出登录后的默认url是"/"
