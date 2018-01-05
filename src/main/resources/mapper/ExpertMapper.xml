@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.njust.dao.baseDao.ExpertMapper" >
+  <resultMap id="BaseResultMap" type="com.njust.bean.baseBean.Expert" >
+    <constructor >
+      <idArg column="expert_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="expert_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="gender" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="contact" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="education" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="nation" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="political_status" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="birthday" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="expert_score" jdbcType="DOUBLE" javaType="java.lang.Double" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.njust.bean.baseBean.Expert" >
+    <constructor >
+      <idArg column="expert_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="expert_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="gender" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="contact" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="education" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="nation" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="political_status" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="birthday" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="expert_score" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="ico" jdbcType="LONGVARBINARY" javaType="_byte[]" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    expert_id, expert_name, gender, contact, email, education, nation, political_status, 
+    birthday, expert_score
+  </sql>
+  <sql id="Blob_Column_List" >
+    ico
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from expert
+    where expert_id = #{expertId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from expert
+    where expert_id = #{expertId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.njust.bean.baseBean.Expert" >
+    insert into expert (expert_id, expert_name, gender, 
+      contact, email, education, 
+      nation, political_status, birthday, 
+      expert_score, ico)
+    values (#{expertId,jdbcType=INTEGER}, #{expertName,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
+      #{contact,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
+      #{nation,jdbcType=VARCHAR}, #{politicalStatus,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
+      #{expertScore,jdbcType=DOUBLE}, #{ico,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.njust.bean.baseBean.Expert" >
+    insert into expert
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="expertId != null" >
+        expert_id,
+      </if>
+      <if test="expertName != null" >
+        expert_name,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="contact != null" >
+        contact,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="education != null" >
+        education,
+      </if>
+      <if test="nation != null" >
+        nation,
+      </if>
+      <if test="politicalStatus != null" >
+        political_status,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="expertScore != null" >
+        expert_score,
+      </if>
+      <if test="ico != null" >
+        ico,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="expertId != null" >
+        #{expertId,jdbcType=INTEGER},
+      </if>
+      <if test="expertName != null" >
+        #{expertName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="contact != null" >
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="politicalStatus != null" >
+        #{politicalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="expertScore != null" >
+        #{expertScore,jdbcType=DOUBLE},
+      </if>
+      <if test="ico != null" >
+        #{ico,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.njust.bean.baseBean.Expert" >
+    update expert
+    <set >
+      <if test="expertName != null" >
+        expert_name = #{expertName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="contact != null" >
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="politicalStatus != null" >
+        political_status = #{politicalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="expertScore != null" >
+        expert_score = #{expertScore,jdbcType=DOUBLE},
+      </if>
+      <if test="ico != null" >
+        ico = #{ico,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where expert_id = #{expertId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.njust.bean.baseBean.Expert" >
+    update expert
+    set expert_name = #{expertName,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      contact = #{contact,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      political_status = #{politicalStatus,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      expert_score = #{expertScore,jdbcType=DOUBLE},
+      ico = #{ico,jdbcType=LONGVARBINARY}
+    where expert_id = #{expertId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.njust.bean.baseBean.Expert" >
+    update expert
+    set expert_name = #{expertName,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      contact = #{contact,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      political_status = #{politicalStatus,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      expert_score = #{expertScore,jdbcType=DOUBLE}
+    where expert_id = #{expertId,jdbcType=INTEGER}
+  </update>
+</mapper>

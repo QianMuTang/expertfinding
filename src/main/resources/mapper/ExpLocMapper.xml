@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.njust.dao.baseDao.ExpLocMapper" >
+  <resultMap id="BaseResultMap" type="com.njust.bean.baseBean.ExpLoc" >
+    <constructor >
+      <idArg column="exp_loc_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="expert_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="location_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="exp_loc_start_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="exp_loc_end_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    exp_loc_id, expert_id, location_id, exp_loc_start_time, exp_loc_end_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from exp_loc
+    where exp_loc_id = #{expLocId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from exp_loc
+    where exp_loc_id = #{expLocId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.njust.bean.baseBean.ExpLoc" >
+    insert into exp_loc (exp_loc_id, expert_id, location_id, 
+      exp_loc_start_time, exp_loc_end_time)
+    values (#{expLocId,jdbcType=INTEGER}, #{expertId,jdbcType=INTEGER}, #{locationId,jdbcType=INTEGER}, 
+      #{expLocStartTime,jdbcType=TIMESTAMP}, #{expLocEndTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.njust.bean.baseBean.ExpLoc" >
+    insert into exp_loc
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="expLocId != null" >
+        exp_loc_id,
+      </if>
+      <if test="expertId != null" >
+        expert_id,
+      </if>
+      <if test="locationId != null" >
+        location_id,
+      </if>
+      <if test="expLocStartTime != null" >
+        exp_loc_start_time,
+      </if>
+      <if test="expLocEndTime != null" >
+        exp_loc_end_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="expLocId != null" >
+        #{expLocId,jdbcType=INTEGER},
+      </if>
+      <if test="expertId != null" >
+        #{expertId,jdbcType=INTEGER},
+      </if>
+      <if test="locationId != null" >
+        #{locationId,jdbcType=INTEGER},
+      </if>
+      <if test="expLocStartTime != null" >
+        #{expLocStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expLocEndTime != null" >
+        #{expLocEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.njust.bean.baseBean.ExpLoc" >
+    update exp_loc
+    <set >
+      <if test="expertId != null" >
+        expert_id = #{expertId,jdbcType=INTEGER},
+      </if>
+      <if test="locationId != null" >
+        location_id = #{locationId,jdbcType=INTEGER},
+      </if>
+      <if test="expLocStartTime != null" >
+        exp_loc_start_time = #{expLocStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expLocEndTime != null" >
+        exp_loc_end_time = #{expLocEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where exp_loc_id = #{expLocId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.njust.bean.baseBean.ExpLoc" >
+    update exp_loc
+    set expert_id = #{expertId,jdbcType=INTEGER},
+      location_id = #{locationId,jdbcType=INTEGER},
+      exp_loc_start_time = #{expLocStartTime,jdbcType=TIMESTAMP},
+      exp_loc_end_time = #{expLocEndTime,jdbcType=TIMESTAMP}
+    where exp_loc_id = #{expLocId,jdbcType=INTEGER}
+  </update>
+</mapper>
