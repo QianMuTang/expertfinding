@@ -1,6 +1,10 @@
 package com.njust.controller;
 
+import com.njust.bean.ResponseResult;
+import com.njust.bean.ResponseResultEnum;
+import com.njust.utils.ResponseResultUtil;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,7 +35,13 @@ public class HelloController {
 
     @RequestMapping("/whoim")
     @ResponseBody
-    public Object whoIm(){
-        return SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public ResponseResult whoIm(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            return ResponseResultUtil.success(((UserDetails)principal).getUsername());
+        } else {
+            return ResponseResultUtil.error(ResponseResultEnum.NOT_LOGIN);
+        }
     }
 }

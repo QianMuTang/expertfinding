@@ -3,8 +3,10 @@ package com.njust.config.security;
 import com.njust.bean.CustomException;
 import com.njust.bean.ResponseResultEnum;
 import com.njust.bean.baseBean.User;
+import com.njust.service.UserRoleService;
 import com.njust.service.UserService;
-import com.sun.org.apache.regexp.internal.REUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,25 +18,32 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MyUserDetailsService implements UserDetailsService {
+    private final static Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRoleService userRoleService;
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // TODO Auto-generated method stub
+    public UserDetails loadUserByUsername(String username) throws CustomException, UsernameNotFoundException {
+
         //这里可以可以通过username（登录时输入的用户名）然后到数据库中找到对应的用户信息，并构建成我们自己的UserInfo来返回。
-        User user = new User();
-//        try {
         try {
-            user = userService.getUserByName(username);
+            User user = userService.getUserByName(username);
+
             if (user != null) {
-                return new UserInfo(user.getUserName(), user.getPassword(), "ROLE_ADMIN", true, true, true, true);
+                String roleName = userRoleService.findRole(user.getUserId());
+                return new UserInfo(user.getUserName(), user.getPassword(), roleName, true, true, true, true);
             }else{
-                throw new UsernameNotFoundException("用户名 " + username + " 找不到");
+                throw new UsernameNotFoundException("UserName " + username + " not found");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            if (e instanceof UsernameNotFoundException){
+                throw (UsernameNotFoundException)e;
+            }
+            throw new CustomException(ResponseResultEnum.SEARCH_ERROR);
         }
-        return null;
     }
 }
