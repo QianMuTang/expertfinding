@@ -2,6 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.njust.dao.baseDao.PublicationMapper" >
   <resultMap id="BaseResultMap" type="com.njust.bean.baseBean.Publication" >
+    <!--
+      WARNING - @mbg.generated
+    -->
     <constructor >
       <idArg column="publication_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="publication_name" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -9,65 +12,9 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
     publication_id, publication_name, publication_score
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from publication
-    where publication_id = #{publicationId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from publication
-    where publication_id = #{publicationId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.njust.bean.baseBean.Publication" >
-    insert into publication (publication_id, publication_name, publication_score
-      )
-    values (#{publicationId,jdbcType=INTEGER}, #{publicationName,jdbcType=VARCHAR}, #{publicationScore,jdbcType=DOUBLE}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.njust.bean.baseBean.Publication" >
-    insert into publication
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="publicationId != null" >
-        publication_id,
-      </if>
-      <if test="publicationName != null" >
-        publication_name,
-      </if>
-      <if test="publicationScore != null" >
-        publication_score,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="publicationId != null" >
-        #{publicationId,jdbcType=INTEGER},
-      </if>
-      <if test="publicationName != null" >
-        #{publicationName,jdbcType=VARCHAR},
-      </if>
-      <if test="publicationScore != null" >
-        #{publicationScore,jdbcType=DOUBLE},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.njust.bean.baseBean.Publication" >
-    update publication
-    <set >
-      <if test="publicationName != null" >
-        publication_name = #{publicationName,jdbcType=VARCHAR},
-      </if>
-      <if test="publicationScore != null" >
-        publication_score = #{publicationScore,jdbcType=DOUBLE},
-      </if>
-    </set>
-    where publication_id = #{publicationId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.njust.bean.baseBean.Publication" >
-    update publication
-    set publication_name = #{publicationName,jdbcType=VARCHAR},
-      publication_score = #{publicationScore,jdbcType=DOUBLE}
-    where publication_id = #{publicationId,jdbcType=INTEGER}
-  </update>
 </mapper>

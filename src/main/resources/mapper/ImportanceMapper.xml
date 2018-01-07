@@ -2,6 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.njust.dao.baseDao.ImportanceMapper" >
   <resultMap id="BaseResultMap" type="com.njust.bean.baseBean.Importance" >
+    <!--
+      WARNING - @mbg.generated
+    -->
     <constructor >
       <idArg column="importance_id" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="result_id" jdbcType="BIGINT" javaType="java.lang.Long" />
@@ -9,65 +12,9 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
     importance_id, result_id, importance_score
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from importance
-    where importance_id = #{importanceId,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from importance
-    where importance_id = #{importanceId,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.njust.bean.baseBean.Importance" >
-    insert into importance (importance_id, result_id, importance_score
-      )
-    values (#{importanceId,jdbcType=BIGINT}, #{resultId,jdbcType=BIGINT}, #{importanceScore,jdbcType=DOUBLE}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.njust.bean.baseBean.Importance" >
-    insert into importance
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="importanceId != null" >
-        importance_id,
-      </if>
-      <if test="resultId != null" >
-        result_id,
-      </if>
-      <if test="importanceScore != null" >
-        importance_score,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="importanceId != null" >
-        #{importanceId,jdbcType=BIGINT},
-      </if>
-      <if test="resultId != null" >
-        #{resultId,jdbcType=BIGINT},
-      </if>
-      <if test="importanceScore != null" >
-        #{importanceScore,jdbcType=DOUBLE},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.njust.bean.baseBean.Importance" >
-    update importance
-    <set >
-      <if test="resultId != null" >
-        result_id = #{resultId,jdbcType=BIGINT},
-      </if>
-      <if test="importanceScore != null" >
-        importance_score = #{importanceScore,jdbcType=DOUBLE},
-      </if>
-    </set>
-    where importance_id = #{importanceId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.njust.bean.baseBean.Importance" >
-    update importance
-    set result_id = #{resultId,jdbcType=BIGINT},
-      importance_score = #{importanceScore,jdbcType=DOUBLE}
-    where importance_id = #{importanceId,jdbcType=BIGINT}
-  </update>
 </mapper>

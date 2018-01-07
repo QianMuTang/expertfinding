@@ -4,7 +4,7 @@ import com.njust.bean.ResponseResult;
 import com.njust.bean.ResponseResultEnum;
 
 /**
- * 装载向前台响应的数据，成功默认code:0,msg:success，错误为ResponseResultEnum类中定义的错误类别
+ * 装载向前台响应的数据，成功默认code:1,msg:success，错误为ResponseResultEnum类中定义的错误类别
  */
 public class ResponseResultUtil {
 

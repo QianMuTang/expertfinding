@@ -2,6 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.njust.dao.baseDao.TraceMapper" >
   <resultMap id="BaseResultMap" type="com.njust.bean.baseBean.Trace" >
+    <!--
+      WARNING - @mbg.generated
+    -->
     <constructor >
       <idArg column="trace_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
@@ -9,65 +12,9 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
     trace_id, user_id, expert_id
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from trace
-    where trace_id = #{traceId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from trace
-    where trace_id = #{traceId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.njust.bean.baseBean.Trace" >
-    insert into trace (trace_id, user_id, expert_id
-      )
-    values (#{traceId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{expertId,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.njust.bean.baseBean.Trace" >
-    insert into trace
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="traceId != null" >
-        trace_id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="expertId != null" >
-        expert_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="traceId != null" >
-        #{traceId,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="expertId != null" >
-        #{expertId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.njust.bean.baseBean.Trace" >
-    update trace
-    <set >
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="expertId != null" >
-        expert_id = #{expertId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where trace_id = #{traceId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.njust.bean.baseBean.Trace" >
-    update trace
-    set user_id = #{userId,jdbcType=INTEGER},
-      expert_id = #{expertId,jdbcType=INTEGER}
-    where trace_id = #{traceId,jdbcType=INTEGER}
-  </update>
 </mapper>

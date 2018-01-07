@@ -23,6 +23,10 @@
         <property name="beginningDelimiter" value="'"/>
         <property name="endingDelimiter" value="'"/>
 
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+        </plugin>
+
         <!-- 注释 -->
         <commentGenerator >
             <property name="suppressAllComments" value="true"/>

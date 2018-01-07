@@ -2,6 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.njust.dao.baseDao.ExpOrgMapper" >
   <resultMap id="BaseResultMap" type="com.njust.bean.baseBean.ExpOrg" >
+    <!--
+      WARNING - @mbg.generated
+    -->
     <constructor >
       <idArg column="exp_org_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="expert_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
@@ -11,85 +14,9 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
     exp_org_id, expert_id, org_id, exp_org_start_time, exp_org_end_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from exp_org
-    where exp_org_id = #{expOrgId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from exp_org
-    where exp_org_id = #{expOrgId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.njust.bean.baseBean.ExpOrg" >
-    insert into exp_org (exp_org_id, expert_id, org_id, 
-      exp_org_start_time, exp_org_end_time)
-    values (#{expOrgId,jdbcType=INTEGER}, #{expertId,jdbcType=INTEGER}, #{orgId,jdbcType=INTEGER}, 
-      #{expOrgStartTime,jdbcType=TIMESTAMP}, #{expOrgEndTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.njust.bean.baseBean.ExpOrg" >
-    insert into exp_org
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="expOrgId != null" >
-        exp_org_id,
-      </if>
-      <if test="expertId != null" >
-        expert_id,
-      </if>
-      <if test="orgId != null" >
-        org_id,
-      </if>
-      <if test="expOrgStartTime != null" >
-        exp_org_start_time,
-      </if>
-      <if test="expOrgEndTime != null" >
-        exp_org_end_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="expOrgId != null" >
-        #{expOrgId,jdbcType=INTEGER},
-      </if>
-      <if test="expertId != null" >
-        #{expertId,jdbcType=INTEGER},
-      </if>
-      <if test="orgId != null" >
-        #{orgId,jdbcType=INTEGER},
-      </if>
-      <if test="expOrgStartTime != null" >
-        #{expOrgStartTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="expOrgEndTime != null" >
-        #{expOrgEndTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.njust.bean.baseBean.ExpOrg" >
-    update exp_org
-    <set >
-      <if test="expertId != null" >
-        expert_id = #{expertId,jdbcType=INTEGER},
-      </if>
-      <if test="orgId != null" >
-        org_id = #{orgId,jdbcType=INTEGER},
-      </if>
-      <if test="expOrgStartTime != null" >
-        exp_org_start_time = #{expOrgStartTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="expOrgEndTime != null" >
-        exp_org_end_time = #{expOrgEndTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where exp_org_id = #{expOrgId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.njust.bean.baseBean.ExpOrg" >
-    update exp_org
-    set expert_id = #{expertId,jdbcType=INTEGER},
-      org_id = #{orgId,jdbcType=INTEGER},
-      exp_org_start_time = #{expOrgStartTime,jdbcType=TIMESTAMP},
-      exp_org_end_time = #{expOrgEndTime,jdbcType=TIMESTAMP}
-    where exp_org_id = #{expOrgId,jdbcType=INTEGER}
-  </update>
 </mapper>

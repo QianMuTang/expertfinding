@@ -5,58 +5,59 @@ import com.njust.bean.ResponseResult;
 import com.njust.bean.baseBean.User;
 import com.njust.service.UserService;
 import com.njust.utils.ResponseResultUtil;
-import com.njust.utils.SendMailUtil;
-import com.sun.tools.corba.se.idl.IncludeGen;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
+/**
+ * 简单的RESTful API
+ */
 @RestController
-@RequestMapping("user")
+@RequestMapping("admin")
 public class UserController {
-    private final static Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private CacheManager cacheManager;
 
-    @GetMapping(value = "/getManagerById/{userId}")
-    public ResponseResult<User> getManagerById(@PathVariable("userId") Integer userId) throws Exception{
-        return ResponseResultUtil.success(userService.getManagerById(userId));
+    //管理员通过id查询一个用户
+    @GetMapping(value = "/{userId}")
+    public ResponseResult<User> getUserById(@PathVariable("userId") Integer userId) throws Exception{
+        //管理员只能查询普通用户
+        return ResponseResultUtil.success(userService.getUserById(userId, 3));
     }
 
-    //管理员添加用户
-    @PostMapping(value = "/add")
-    public ResponseResult<User> add(User user)throws Exception{
+    //管理员添加用户（添加用户名、密码、是否推送）
+    @PostMapping
+    public ResponseResult<User> insert(User user)throws Exception{
+        //管理员只能添加普通用户
+        user.setPrivLevel(3);
         userService.insertUser(user);
         return ResponseResultUtil.success();
     }
 
-    //管理员查看用户信息
-    @GetMapping(value = "/getAll/{userId}")
-    public ResponseResult<PageInfo<User>> getAll(@PathVariable(value = "userId") Integer userId,
-                                 @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-                                 @RequestParam(value = "pageSize", required = false, defaultValue = "4") Integer pageSize) throws Exception{
-        return ResponseResultUtil.success(userService.getAll(userId, page, pageSize));
+    //管理员获取用户列表
+    @GetMapping
+    public ResponseResult<PageInfo<User>> getAll(@RequestParam(value = "order", required = false,defaultValue = "user_id") String order,
+                                                 @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                                                 @RequestParam(value = "pageSize", required = false, defaultValue = "4") Integer pageSize,
+                                                 User user) throws Exception{
+        user.setPrivLevel(3);
+        return ResponseResultUtil.success(userService.getAll(order, page, pageSize, user));
     }
 
-    //发送邮件
-    @RequestMapping(value = "/sendMail")
-    public ResponseResult sendMail() throws Exception {
-        new SendMailUtil().sendMail();
+    //管理员通过id更新一个用户（只更新用户名和是否推送）
+    @PutMapping(value = "/{userId}")
+    public ResponseResult<User> updateUserById(@PathVariable("userId") Integer userId, User user) throws Exception{
+        user.setUserId(userId);
+        //管理员只能查看普通用户
+        user.setPrivLevel(3);
+        userService.updateUser(user);
         return ResponseResultUtil.success();
     }
 
-    //清除缓存
-    @RequestMapping(value = "/removeCache")
-    public String removeCache(){
-        cacheManager.getCache("baseCache").clear();
-        return "缓存已清除！";
+    //管理员通过id删除一个用户
+    @DeleteMapping(value = "/{userId}")
+    public ResponseResult<User> deleteUserById(@PathVariable("userId") Integer userId) throws Exception{
+        userService.deleteUser(userId);
+        return ResponseResultUtil.success();
     }
-
 }

@@ -1,17 +1,7 @@
 package com.njust.dao.baseDao;
 
 import com.njust.bean.baseBean.Field;
+import tk.mybatis.mapper.common.Mapper;
 
-public interface FieldMapper {
-    int deleteByPrimaryKey(Integer fieidId);
-
-    int insert(Field record);
-
-    int insertSelective(Field record);
-
-    Field selectByPrimaryKey(Integer fieidId);
-
-    int updateByPrimaryKeySelective(Field record);
-
-    int updateByPrimaryKey(Field record);
+public interface FieldMapper extends Mapper<Field> {
 }

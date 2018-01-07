@@ -1,17 +1,7 @@
 package com.njust.dao.baseDao;
 
 import com.njust.bean.baseBean.Role;
+import tk.mybatis.mapper.common.Mapper;
 
-public interface RoleMapper {
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(Role record);
-
-    int insertSelective(Role record);
-
-    Role selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Role record);
-
-    int updateByPrimaryKey(Role record);
+public interface RoleMapper extends Mapper<Role> {
 }

@@ -13,10 +13,10 @@ securityconfig:
 #  退出成功的链接
   logoutsuccssurl: /
 #  允许访问的URL列表
-  permitall: /
+  permitall: /,/admin/**
 #  权限配置列表
-  urlroles: /user/** = ROLE_USER;
-            /whoim = ROLE_ADMIN
+  urlroles: /hello = ROLE_USER,ROLE_ADMIN;
+             /whoim = ROLE_SUPER
 
 spring:
   resources:

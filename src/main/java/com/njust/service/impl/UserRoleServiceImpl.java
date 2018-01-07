@@ -2,8 +2,8 @@ package com.njust.service.impl;
 
 import com.njust.bean.baseBean.Role;
 import com.njust.bean.baseBean.UserRole;
-import com.njust.dao.RoleMapperExtend;
-import com.njust.dao.UserRoleMapperExtend;
+import com.njust.dao.baseDao.RoleMapper;
+import com.njust.dao.baseDao.UserRoleMapper;
 import com.njust.service.UserRoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,19 +14,19 @@ import org.springframework.stereotype.Service;
 public class UserRoleServiceImpl implements UserRoleService {
     private final static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
-    private UserRoleMapperExtend userRoleMapperExtend;
+    private UserRoleMapper userRoleMapper;
 
     @Autowired
-    private RoleMapperExtend roleMapperExtend;
+    private RoleMapper roleMapper;
 
     @Override
     public String findRole(int uid) {
         UserRole userRole = new UserRole();
         userRole.setUid(uid);
-        Integer rid = userRoleMapperExtend.selectOne(userRole).getRid();
+        Integer rid = userRoleMapper.selectOne(userRole).getRid();
 
         Role role = new Role();
         role.setId(rid);
-        return roleMapperExtend.selectOne(role).getRoleName();
+        return roleMapper.selectOne(role).getRoleName();
     }
 }
