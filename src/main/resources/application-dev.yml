@@ -13,7 +13,7 @@ securityconfig:
 #  退出成功的链接
   logoutsuccssurl: /
 #  允许访问的URL列表
-  permitall: /,/admin/**
+  permitall: /,/admin/**,/druid/**
 #  权限配置列表
   urlroles: /hello = ROLE_USER,ROLE_ADMIN;
              /whoim = ROLE_SUPER

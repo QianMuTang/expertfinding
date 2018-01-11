@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService{
     public PageInfo<User> getAll(String order, Integer page, Integer pageSize, User user) throws Exception{
         try{
             PageHelper.startPage(page, pageSize, order);
-            PageInfo<User> pageInfo = new PageInfo<User>(userMapper.select(user));
+            PageInfo<User> pageInfo = new PageInfo<>(userMapper.select(user));
             return pageInfo;
         }catch (Exception e){
             e.printStackTrace();
