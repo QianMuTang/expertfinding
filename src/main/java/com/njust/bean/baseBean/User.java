@@ -10,7 +10,11 @@ public class User {
     @Column(name = "user_name")
     private String userName;
 
-    private String password;
+    @Column(name = "user_email")
+    private String userEmail;
+
+    @Column(name = "is_push")
+    private Integer isPush;
 
     /**
      * 2超级管理员1管理员0普通用户
@@ -18,19 +22,12 @@ public class User {
     @Column(name = "priv_level")
     private Integer privLevel;
 
-    @Column(name = "user_email")
-    private String userEmail;
-
-    @Column(name = "is_push")
-    private Integer isPush;
-
-    public User(Integer userId, String userName, String password, Integer privLevel, String userEmail, Integer isPush) {
+    public User(Integer userId, String userName, String userEmail, Integer isPush, Integer privLevel) {
         this.userId = userId;
         this.userName = userName;
-        this.password = password;
-        this.privLevel = privLevel;
         this.userEmail = userEmail;
         this.isPush = isPush;
+        this.privLevel = privLevel;
     }
 
     public User() {
@@ -66,38 +63,6 @@ public class User {
     }
 
     /**
-     * @return password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * @param password
-     */
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
-    /**
-     * 获取2超级管理员1管理员0普通用户
-     *
-     * @return priv_level - 2超级管理员1管理员0普通用户
-     */
-    public Integer getPrivLevel() {
-        return privLevel;
-    }
-
-    /**
-     * 设置2超级管理员1管理员0普通用户
-     *
-     * @param privLevel 2超级管理员1管理员0普通用户
-     */
-    public void setPrivLevel(Integer privLevel) {
-        this.privLevel = privLevel;
-    }
-
-    /**
      * @return user_email
      */
     public String getUserEmail() {
@@ -123,5 +88,23 @@ public class User {
      */
     public void setIsPush(Integer isPush) {
         this.isPush = isPush;
+    }
+
+    /**
+     * 获取2超级管理员1管理员0普通用户
+     *
+     * @return priv_level - 2超级管理员1管理员0普通用户
+     */
+    public Integer getPrivLevel() {
+        return privLevel;
+    }
+
+    /**
+     * 设置2超级管理员1管理员0普通用户
+     *
+     * @param privLevel 2超级管理员1管理员0普通用户
+     */
+    public void setPrivLevel(Integer privLevel) {
+        this.privLevel = privLevel;
     }
 }

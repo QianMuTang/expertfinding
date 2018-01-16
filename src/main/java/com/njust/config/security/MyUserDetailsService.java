@@ -3,6 +3,7 @@ package com.njust.config.security;
 import com.njust.bean.CustomException;
 import com.njust.bean.ResponseResultEnum;
 import com.njust.bean.baseBean.User;
+import com.njust.service.UserPwdService;
 import com.njust.service.UserRoleService;
 import com.njust.service.UserService;
 import org.slf4j.Logger;
@@ -25,6 +26,9 @@ public class MyUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRoleService userRoleService;
 
+    @Autowired
+    private UserPwdService userPwdService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws CustomException, UsernameNotFoundException {
 
@@ -33,8 +37,9 @@ public class MyUserDetailsService implements UserDetailsService {
             User user = userService.getUserByName(username);
 
             if (user != null) {
+                String password = userPwdService.getPwdById(user.getUserId());
                 String roleName = userRoleService.findRole(user.getUserId());
-                return new UserInfo(user.getUserName(), user.getPassword(), roleName, true, true, true, true);
+                return new UserInfo(user.getUserName(), password, roleName, true, true, true, true);
             }else{
                 throw new UsernameNotFoundException("UserName " + username + " not found");
             }

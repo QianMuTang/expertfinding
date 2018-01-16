@@ -5,8 +5,10 @@ import com.github.pagehelper.PageInfo;
 import com.njust.bean.CustomException;
 import com.njust.bean.ResponseResultEnum;
 import com.njust.bean.baseBean.User;
+import com.njust.bean.baseBean.UserPwd;
 import com.njust.bean.baseBean.UserRole;
 import com.njust.dao.baseDao.UserMapper;
+import com.njust.dao.baseDao.UserPwdMapper;
 import com.njust.dao.baseDao.UserRoleMapper;
 import com.njust.service.UserService;
 import com.njust.utils.UserUtil;
@@ -30,6 +32,9 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserRoleMapper userRoleMapper;
 
+    @Autowired
+    UserPwdMapper userPwdMapper;
+
     @Override
     @Cacheable
     public User getUserById(Integer userId, Integer priv) throws Exception {
@@ -45,10 +50,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    @Transactional
-    public int insertUser(User user) throws Exception {
+    @Transactional(rollbackFor = Exception.class)
+    public int insertUser(User user, String password) throws Exception {
         //数据是否缺失
-        if (user.getUserName()!= null && user.getPassword()!=null && user.getIsPush()!=null){
+        if (user.getUserName()!=null && user.getUserName()!="" && user.getIsPush()!=null && password!=null && password!=""){
             try{
                 //判断用户名是否重复
                 if(!new UserUtil(userMapper).IsSameName(user.getUserName())){
@@ -57,9 +62,18 @@ public class UserServiceImpl implements UserService{
                 //密码加密
 //            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 //            user.setPassword(encoder.encode(user.getPassword().trim()));
+                //插入用户信息
                 userMapper.insertSelective(user);
+                //获取插入用户的id
+                Integer userId = userMapper.selectOne(user).getUserId();
+                //插入用户密码
+                UserPwd userPwd = new UserPwd();
+                userPwd.setPassword(password);
+                userPwd.setUserId(userId);
+                userPwdMapper.insert(userPwd);
+                //插入用户角色
                 UserRole userRole = new UserRole();
-                userRole.setUid(userMapper.selectOne(user).getUserId());
+                userRole.setUid(userId);
                 userRole.setRid(user.getPrivLevel());
                 return userRoleMapper.insert(userRole);
             }catch (Exception e){
@@ -88,19 +102,26 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public int updateUser(User user) throws Exception {
-        //是否修改了密码
-        if(user.getPassword() == null){
-            try {
-                return userMapper.updateByPrimaryKeySelective(user);
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new CustomException(ResponseResultEnum.UPDATE_ERROR);
+    @Transactional(rollbackFor = Exception.class)
+    public int updateUser(User user, String password) throws Exception {
+        try {
+            if (user.getUserName()!=null && user.getUserName()!="" && user.getIsPush()!=null){
+                userMapper.updateByPrimaryKey(user);
             }
+            if(password!=null && password!=""){
+                logger.info("密码：{}",password);
+                UserPwd userPwd = new UserPwd();
+                userPwd.setUserId(user.getUserId());
+                Integer pwdId = userPwdMapper.selectOne(userPwd).getId();
+                userPwd.setId(pwdId);
+                userPwd.setPassword(password);
+                userPwdMapper.updateByPrimaryKeySelective(userPwd);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException(ResponseResultEnum.UPDATE_ERROR);
         }
-        else{
-            throw new CustomException(ResponseResultEnum.DENY_MODIFY_PWD);
-        }
+        return 1;
     }
 
     @Override
