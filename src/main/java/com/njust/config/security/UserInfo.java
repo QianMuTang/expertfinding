@@ -12,6 +12,7 @@ import java.util.Collection;
  */
 public class UserInfo implements Serializable, UserDetails {
     private static final long serialVersionUID = 1L;
+    private Integer userid;
     private String username;
     private String password;
     private String role;
@@ -19,9 +20,10 @@ public class UserInfo implements Serializable, UserDetails {
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enabled;
-    public UserInfo(String username, String password, String role, boolean accountNonExpired, boolean accountNonLocked,
+    public UserInfo(Integer userid, String username, String password, String role, boolean accountNonExpired, boolean accountNonLocked,
                     boolean credentialsNonExpired, boolean enabled) {
         // TODO Auto-generated constructor stub
+        this.userid = userid;
         this.username = username;
         this.password = password;
         this.role = role;
@@ -36,6 +38,14 @@ public class UserInfo implements Serializable, UserDetails {
         // TODO Auto-generated method stub
         return AuthorityUtils.commaSeparatedStringToAuthorityList(role);
     }
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
+    }
+
     @Override
     public String getPassword() {
         // TODO Auto-generated method stub

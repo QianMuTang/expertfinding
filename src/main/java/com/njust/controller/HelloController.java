@@ -2,6 +2,7 @@ package com.njust.controller;
 
 import com.njust.bean.ResponseResult;
 import com.njust.bean.ResponseResultEnum;
+import com.njust.config.security.UserInfo;
 import com.njust.utils.ResponseResultUtil;
 import com.njust.utils.SendMailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,8 @@ public class HelloController {
     public ResponseResult whoIm(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (principal instanceof UserDetails) {
-            return ResponseResultUtil.success(((UserDetails)principal).getUsername());
+        if (principal instanceof UserInfo) {
+            return ResponseResultUtil.success(((UserInfo)principal).getUsername());
         } else {
             return ResponseResultUtil.error(ResponseResultEnum.NOT_LOGIN);
         }

@@ -1,7 +1,12 @@
 package com.njust.utils;
 
+import com.njust.bean.ResponseResult;
+import com.njust.bean.ResponseResultEnum;
 import com.njust.bean.baseBean.User;
+import com.njust.config.security.UserInfo;
 import com.njust.dao.baseDao.UserMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserUtil {
     private final UserMapper userMapper;
@@ -26,5 +31,16 @@ public class UserUtil {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
+    }
+
+    //获取登录用户
+    public static ResponseResult getLoginId(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserInfo) {
+            return ResponseResultUtil.success(((UserInfo)principal).getUserid());
+        }else {
+            return ResponseResultUtil.error(ResponseResultEnum.NOT_LOGIN);
+        }
     }
 }

@@ -15,6 +15,11 @@ public enum ResponseResultEnum {
     MISSING_DATA(4058008,"数据缺失"),
     NO_USER(4058009, "用户不存在"),
     DENY_MODIFY_PWD(40580010, "禁止修改密码"),
+    NOT_SAME_PWD(40580011, "密码不一致"),
+    MISSING_NEW_PWD(40580012, "请输入新密码"),
+    MISSING_OLD_PWD(40580013, "请输入旧密码"),
+    PASSWORD_ERROR(40580014, "旧密码输入错误"),
+    MISSING_NAME(40580015, "请输入新的用户名"),
     MAIL_ERROR(405800000, "邮件发送失败");
 
     private Integer code;

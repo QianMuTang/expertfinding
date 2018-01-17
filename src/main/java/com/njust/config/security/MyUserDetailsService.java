@@ -39,7 +39,7 @@ public class MyUserDetailsService implements UserDetailsService {
             if (user != null) {
                 String password = userPwdService.getPwdById(user.getUserId());
                 String roleName = userRoleService.findRole(user.getUserId());
-                return new UserInfo(user.getUserName(), password, roleName, true, true, true, true);
+                return new UserInfo(user.getUserId(), user.getUserName(), password, roleName, true, true, true, true);
             }else{
                 throw new UsernameNotFoundException("UserName " + username + " not found");
             }

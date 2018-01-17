@@ -18,8 +18,11 @@ public interface UserService {
     int updateUser(User user, String password) throws Exception;
 
     //根据id删除用户
-    int deleteUser(Integer userId) throws Exception;
+    int deleteUser(String userIds, Integer priv) throws Exception;
 
     //根据用户名获取用户信息
     User getUserByName(String userName) throws Exception;
+
+    //更新用户名
+    int updateName(Integer userId, String userName) throws Exception;
 }
