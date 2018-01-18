@@ -1,7 +1,7 @@
-版本3.1
-1、采用jasypt加密数据库密码。在test/…/EncryptTest中加密自己的数据库密码，并填写到yml的spring.datasource.password的ECN括号中。
-2、druid改为需管理员或超级管理员权限，账号/密码:4058/666666。
-3、数据库将user表的密码分离。
+版本0.3.2
+	1. 增加若干接口
+	2. 修改yml的静态资源路径
+注：在测试修改个人密码或昵称的接口时，需先登录
 
 功能：
 1、集成了通用mapper接口(文档地址：https://gitee.com/free/Mapper/blob/master/wiki/mapper3/5.Mappers.md)，直接调用XxxMapper即可（如果未找到合适的SQL方法，自行在该接口中自定义）
