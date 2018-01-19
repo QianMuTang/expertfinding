@@ -12,22 +12,28 @@ jasypt:
     password: XPNvcYlxS9DpTJcdAwiULQ==     #根密码，即解密密文的密码
 
 securityconfig:
+#  记住登录时间
+  rememberme: 86400
 #  登录链接
   login: /login
 #  退出成功的链接
   logoutsuccssurl: /
+#  允许访问的静态资源列表
+  staticresources: /META-INF/**,/ico/**,/static/**,/images/**,/js/**,/css/**,/templates/**
 #  允许访问的URL列表
-  permitall: /,/admin/**,/super/**,/user/**
+  permitall: /,/admin/**,/super/**,/user/**,/register,/expert/**
 #  权限配置列表
   urlroles: /druid/** = ROLE_ADMIN,ROLE_SUPER;
              /hello = ROLE_USER,ROLE_ADMIN,ROLE_SUPER;
              /whoim = ROLE_SUPER
 
+web:
+#  头像本地上传地址
+  upload-path: C:/WEB-INF/upload/
+#  访问头像的映射地址
+  map-path: /ico/**
+
 spring:
-  mvc:
-    static-path-pattern: /**
-#  resources:
-#    static-locations: classpath:/**
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver

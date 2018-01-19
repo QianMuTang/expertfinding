@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
@@ -54,26 +55,27 @@ public class UserServiceImpl implements UserService{
     @Transactional(rollbackFor = Exception.class)
     public int insertUser(User user, String password) throws Exception {
         //数据是否缺失
-        if (user.getUserName()==null || user.getUserName().trim()=="" || user.getPrivLevel()==null || password==null || password.trim()==""){
+        if (user.getUserName()==null || user.getUserName().trim().equals("") || user.getPrivLevel()==null || password==null || password.trim().equals("")){
             throw new CustomException(ResponseResultEnum.MISSING_DATA);
         }
         //判断用户名是否重复
-        if(!new UserUtil(userMapper).IsSameName(user.getUserName())){
+        if(new UserUtil(userMapper).IsSameName(user.getUserName().trim())){
             throw new CustomException(ResponseResultEnum.SAME_NAME);
         }
         try{
-            //密码加密
-//            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//            user.setPassword(encoder.encode(user.getPassword().trim()));
             //插入用户信息
             userMapper.insertSelective(user);
             //获取插入用户的id
             Integer userId = userMapper.selectOne(user).getUserId();
+
             //插入用户密码
+            //密码加密
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             UserPwd userPwd = new UserPwd();
-            userPwd.setPassword(password);
+            userPwd.setPassword(encoder.encode(password.trim()));
             userPwd.setUserId(userId);
             userPwdMapper.insert(userPwd);
+
             //插入用户角色
             UserRole userRole = new UserRole();
             userRole.setUid(userId);
@@ -92,15 +94,14 @@ public class UserServiceImpl implements UserService{
             Example example = new Example(User.class);
             Example.Criteria criteria = example.createCriteria();
             example.and().andEqualTo("privLevel", user.getPrivLevel());
-            if (user.getUserName() != null && user.getUserName().trim() != ""){
+            if (user.getUserName() != null && user.getUserName().trim().equals("")){
                 criteria.andLike("userName", "%"+user.getUserName()+"%");
             }
-            if (user.getUserEmail() != null && user.getUserEmail().trim() != ""){
+            if (user.getUserEmail() != null && user.getUserEmail().trim().equals("")){
                 criteria.andLike("userEmail", "%"+user.getUserEmail()+"%");
             }
             PageHelper.startPage(page, pageSize, order);
-            PageInfo<User> pageInfo = new PageInfo<>(userMapper.selectByExample(example));
-            return pageInfo;
+            return new PageInfo<>(userMapper.selectByExample(example));
         }catch (Exception e){
             e.printStackTrace();
             throw new CustomException(ResponseResultEnum.SEARCH_ERROR);
@@ -110,18 +111,22 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int updateUser(User user, String password) throws Exception {
-        if (user.getUserName()==null || user.getUserName().trim()=="" || user.getPrivLevel()==null){
+        if (user.getUserName()==null || user.getUserName().trim().equals("") || user.getPrivLevel()==null){
             throw new CustomException(ResponseResultEnum.MISSING_DATA);
+        }
+        //如果用户名改变了，且和别的用户名字重复
+        if(!userMapper.selectByPrimaryKey(user.getUserId()).getUserName().equals(user.getUserName().trim()) && new UserUtil(userMapper).IsSameName(user.getUserName().trim())){
+            throw new CustomException(ResponseResultEnum.SAME_NAME);
         }
         try {
             userMapper.updateByPrimaryKeySelective(user);
-            if(password!=null && password.trim()!=""){
-                logger.info("密码：{}",password);
+            if(password!=null && password.trim().equals("")){
+                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
                 UserPwd userPwd = new UserPwd();
                 userPwd.setUserId(user.getUserId());
                 Integer pwdId = userPwdMapper.selectOne(userPwd).getId();
                 userPwd.setId(pwdId);
-                userPwd.setPassword(password);
+                userPwd.setPassword(encoder.encode(password.trim()));
                 userPwdMapper.updateByPrimaryKeySelective(userPwd);
             }
         } catch (Exception e) {
@@ -163,7 +168,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public int updateName(Integer userId, String userName) throws Exception {
-        if (userName.trim() == "" || userName.trim()==null){
+        if (userName.trim().equals("")){
             throw new CustomException(ResponseResultEnum.MISSING_NAME);
         }
         try{

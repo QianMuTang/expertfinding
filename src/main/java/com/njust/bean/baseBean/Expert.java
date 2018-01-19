@@ -32,9 +32,10 @@ public class Expert {
     @Column(name = "expert_score")
     private Double expertScore;
 
-    private byte[] ico;
+    @Column(name = "ico_name")
+    private String icoName;
 
-    public Expert(Integer expertId, String expertName, Integer gender, String contact, String email, String education, String nation, String politicalStatus, Date birthday, Double expertScore, byte[] ico) {
+    public Expert(Integer expertId, String expertName, Integer gender, String contact, String email, String education, String nation, String politicalStatus, Date birthday, Double expertScore, String icoName) {
         this.expertId = expertId;
         this.expertName = expertName;
         this.gender = gender;
@@ -45,7 +46,7 @@ public class Expert {
         this.politicalStatus = politicalStatus;
         this.birthday = birthday;
         this.expertScore = expertScore;
-        this.ico = ico;
+        this.icoName = icoName;
     }
 
     public Expert() {
@@ -197,16 +198,16 @@ public class Expert {
     }
 
     /**
-     * @return ico
+     * @return ico_name
      */
-    public byte[] getIco() {
-        return ico;
+    public String getIcoName() {
+        return icoName;
     }
 
     /**
-     * @param ico
+     * @param icoName
      */
-    public void setIco(byte[] ico) {
-        this.ico = ico;
+    public void setIcoName(String icoName) {
+        this.icoName = icoName == null ? null : icoName.trim();
     }
 }

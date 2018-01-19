@@ -16,24 +16,7 @@
       <arg column="political_status" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="birthday" jdbcType="DATE" javaType="java.util.Date" />
       <arg column="expert_score" jdbcType="DOUBLE" javaType="java.lang.Double" />
-    </constructor>
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.njust.bean.baseBean.Expert" >
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <constructor >
-      <idArg column="expert_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="expert_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="gender" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="contact" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="education" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="nation" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="political_status" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="birthday" jdbcType="DATE" javaType="java.util.Date" />
-      <arg column="expert_score" jdbcType="DOUBLE" javaType="java.lang.Double" />
-      <arg column="ico" jdbcType="LONGVARBINARY" javaType="_byte[]" />
+      <arg column="ico_name" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
@@ -41,12 +24,6 @@
       WARNING - @mbg.generated
     -->
     expert_id, expert_name, gender, contact, email, education, nation, political_status, 
-    birthday, expert_score
-  </sql>
-  <sql id="Blob_Column_List" >
-    <!--
-      WARNING - @mbg.generated
-    -->
-    ico
+    birthday, expert_score, ico_name
   </sql>
 </mapper>

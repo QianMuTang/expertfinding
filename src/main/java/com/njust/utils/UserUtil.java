@@ -20,9 +20,9 @@ public class UserUtil {
         User user = new User();
         user.setUserName(userName);
         if(userMapper.selectOne(user) == null){
-            return Boolean.TRUE;
+            return Boolean.FALSE;
         }
-        return Boolean.FALSE;
+        return Boolean.TRUE;
     }
 
    // 用户是否存在
@@ -33,12 +33,22 @@ public class UserUtil {
         return Boolean.FALSE;
     }
 
-    //获取登录用户
+    //获取登录用户id
     public static ResponseResult getLoginId(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof UserInfo) {
             return ResponseResultUtil.success(((UserInfo)principal).getUserid());
+        }else {
+            return ResponseResultUtil.error(ResponseResultEnum.NOT_LOGIN);
+        }
+    }
+    //获取登录用户密码
+    public static ResponseResult getLoginPwd(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserInfo) {
+            return ResponseResultUtil.success(((UserInfo)principal).getPassword());
         }else {
             return ResponseResultUtil.error(ResponseResultEnum.NOT_LOGIN);
         }

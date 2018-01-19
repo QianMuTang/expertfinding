@@ -9,7 +9,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,13 +16,9 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.sql.DataSource;
 
@@ -48,22 +43,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
 
     @Autowired
-    private MyAuthenticationFailHandler myAuthenticationFailHander;
+    private MyAuthenticationFailHandler myAuthenticationFailHandler;
 
     @Autowired
     private MyAccessDeniedHandler myAccessDeniedHandler;
 
     @Autowired
     @Qualifier("dataSource")
-    private DataSource dataSource;   //是在application.properites
+    private DataSource dataSource;   //是在application-dev.yml
 
     /**
      * 身份验证配置，用于注入自定义身份验证Bean和密码校验规则
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(myUserDetailsService);
-//        auth.authenticationProvider(provider);
+        auth.userDetailsService(myUserDetailsService).passwordEncoder(passwordEncoder());
         //记住我
         auth.eraseCredentials(false);
     }
@@ -73,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/js/**", "/css/**", "/images/**");
+        web.ignoring().antMatchers(settings.getStaticresources().split(","));
     }
 
     /**
@@ -83,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 //指定登录页是"/login"
-                .formLogin().loginPage(settings.getLogin()).permitAll().successHandler(myAuthenticationSuccessHandler).failureHandler(myAuthenticationFailHander)
+                .formLogin().loginPage(settings.getLogin()).permitAll().successHandler(myAuthenticationSuccessHandler).failureHandler(myAuthenticationFailHandler)
                 .and().authorizeRequests()
                 //允许所有用户访问的url
                 .antMatchers(settings.getPermitall().split(",")).permitAll()
@@ -95,12 +89,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //拒绝连接
                 .and().exceptionHandling().accessDeniedHandler(myAccessDeniedHandler)
                 //记住我功能
-                .and().rememberMe().tokenRepository(persistentTokenRepository()).tokenValiditySeconds(86400)
+                .and().rememberMe().tokenRepository(persistentTokenRepository()).tokenValiditySeconds(Integer.parseInt(settings.getRememberme()))
                 .and().csrf().disable();
     }
 
+    //加密算法
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
