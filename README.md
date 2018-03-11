@@ -1,7 +1,8 @@
-## 版本0.3.2
-* 增加若干接口
-* 修改yml的静态资源路径
-* 注：在测试 个人密码和昵称的接口 ，需先登录
+## 版本0.3.4
+* 1.修改数据库所有用户密码统一为123456
+* 2.接口统一增加前缀：/api
+* 3.login接口文档修改
+* 4.取消了jasypt加密
 ----------
 ## 框架功能
 * 1.**集成了通用mapper接口**([文档地址](https://gitee.com/free/Mapper/blob/master/wiki/mapper3/5.Mappers.md))，直接调用XxxMapper即可（如果未找到合适的SQL方法，自行在该接口中自定义）
@@ -62,3 +63,4 @@
   * **remember me**。保存登录用户token
   * **权限控制**。暂定一个用户一个角色，三个角色`ROLE_SUPER`/`ROLE_ADMIN`/`ROLE_USER`。配置也在yml中，示例中/hello/**需ROLE_USER或ROLE_ADMIN；/whoim需ROLE_SUPER
 * 10.**jasypt加密配置文件中的数据库密码**。在`test/…/EncryptTest`中加密自己的数据库密码，并填写到yml的`spring.datasource.password`的`ECN`括号中。
+* 11.**系统日志**。项目所在根目录生成log文件夹
