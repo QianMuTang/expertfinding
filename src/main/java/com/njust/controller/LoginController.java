@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 用于测试授权认证以及权限分配，权限配置在yml文件修改测试
  */
 @Controller
-public class HelloController {
+public class LoginController {
     @Autowired
     private CacheManager cacheManager;
 
@@ -26,19 +26,14 @@ public class HelloController {
         return "index";
     }
 
-    @RequestMapping("/hello")
-    public String hello(){
-        return "hello";
-    }
-
-    @RequestMapping("/login")
+    @RequestMapping("/api/login")
     public String login(){
         return "login";
     }
 
-    @RequestMapping("/whoim")
+    @RequestMapping("/api/loginName")
     @ResponseBody
-    public ResponseResult whoIm(){
+    public ResponseResult loginName(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof UserInfo) {
@@ -54,14 +49,14 @@ public class HelloController {
      * @throws Exception
      */
     //发送邮件
-    @RequestMapping(value = "/sendMail")
+    @RequestMapping(value = "/api/sendMail")
     public ResponseResult sendMail() throws Exception {
         new SendMailUtil().sendMail();
         return ResponseResultUtil.success();
     }
 
     //清除缓存
-    @RequestMapping(value = "/removeCache")
+    @RequestMapping(value = "/api/removeCache")
     public String removeCache(){
         cacheManager.getCache("baseCache").clear();
         return "缓存已清除！";

@@ -7,25 +7,27 @@ mybatis:
   mapper-locations: mapper/*.xml
 #  type-aliases-package: com.njust.bean
 
-jasypt:
-  encryptor:
-    password: XPNvcYlxS9DpTJcdAwiULQ==     #根密码，即解密密文的密码
+#jasypt:
+#  encryptor:
+#    password: XPNvcYlxS9DpTJcdAwiULQ==     #根密码，即解密密文的密码
 
 securityconfig:
 #  记住登录时间
   rememberme: 86400
 #  登录链接
-  login: /login
+  login: /api/login
 #  退出成功的链接
   logoutsuccssurl: /
 #  允许访问的静态资源列表
   staticresources: /META-INF/**,/ico/**,/static/**,/images/**,/js/**,/css/**,/templates/**
 #  允许访问的URL列表
-  permitall: /,/admin/**,/super/**,/user/**,/register,/expert/**
+  permitall: /,/api/register,/api/expert/**
 #  权限配置列表
   urlroles: /druid/** = ROLE_ADMIN,ROLE_SUPER;
-             /hello = ROLE_USER,ROLE_ADMIN,ROLE_SUPER;
-             /whoim = ROLE_SUPER
+             /api/user/** = ROLE_USER;
+             /api/admin/** = ROLE_ADMIN,;
+             /api/super/** = ROLE_SUPER;
+             /api/loginName = ROLE_USER,ROLE_ADMIN,ROLE_SUPER
 
 web:
 #  头像本地上传地址
@@ -39,7 +41,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/expert_finding?characterEncoding=utf8&useSSL=true
     username: root
-    password: ENC(nY9KY4LkcFJwPdOPFQoTdyac97p4Xhrd)
+    password: Zwq18362961518.
     # 初始化大小，最小，最大
     initialSize: 5
     minIdle: 5

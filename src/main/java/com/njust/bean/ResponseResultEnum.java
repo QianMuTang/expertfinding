@@ -16,8 +16,10 @@ public enum ResponseResultEnum {
     EMPTY_FILE(4058009, "文件不能为空"),
     UPLOAD_FAIL(40580010, "文件上传失败"),
     NOT_SAME_PWD(40580011, "密码不一致"),
-    MISSING_NEW_PWD(40580012, "请输入新密码"),
-    MISSING_NAME(40580013, "请输入新的用户名"),
+    MISSING_PWD(40580012, "密码为空"),
+    MISSING_NEW_PWD(40580013, "请输入新密码"),
+    MISSING_NAME(40580014, "请输入新的用户名"),
+    LOGIN_SUCCESS(40580015, "登录成功"),
     MAIL_ERROR(405800000, "邮件发送失败");
 
     private Integer code;

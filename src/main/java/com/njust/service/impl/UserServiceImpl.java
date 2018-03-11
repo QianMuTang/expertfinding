@@ -120,14 +120,15 @@ public class UserServiceImpl implements UserService{
         }
         try {
             userMapper.updateByPrimaryKeySelective(user);
-            if(password!=null && password.trim().equals("")){
+            if(password!=null && !password.trim().equals("")){
                 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
                 UserPwd userPwd = new UserPwd();
                 userPwd.setUserId(user.getUserId());
-                Integer pwdId = userPwdMapper.selectOne(userPwd).getId();
-                userPwd.setId(pwdId);
+                userPwd = userPwdMapper.selectOne(userPwd);
                 userPwd.setPassword(encoder.encode(password.trim()));
-                userPwdMapper.updateByPrimaryKeySelective(userPwd);
+                userPwdMapper.updateByPrimaryKey(userPwd);
+            }else{
+                throw new CustomException((ResponseResultEnum.MISSING_PWD));
             }
         } catch (Exception e) {
             e.printStackTrace();

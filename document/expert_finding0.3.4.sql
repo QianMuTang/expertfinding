@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2018-01-19 21:39:27
+Date: 2018-03-11 18:03:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,7 +32,7 @@ CREATE TABLE `expert` (
   `expert_score` double DEFAULT NULL,
   `ico_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`expert_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of expert
@@ -419,16 +419,14 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('1', 'ben', 'song@mail.com', '0', '3');
-INSERT INTO `user` VALUES ('2', 'sherry', 'sherry@mail.com', '1', '3');
+INSERT INTO `user` VALUES ('2', 'sherry', 'sherry@mail.com', '0', '3');
 INSERT INTO `user` VALUES ('3', 'bill', '', '1', '3');
-INSERT INTO `user` VALUES ('4', 'john', 'jhon@mailcom', '0', '3');
+INSERT INTO `user` VALUES ('4', 'john', 'jhon@mailcom', '1', '3');
 INSERT INTO `user` VALUES ('5', 'philip', 'philip@mail.com', '1', '3');
 INSERT INTO `user` VALUES ('6', 'admin', null, '0', '2');
 INSERT INTO `user` VALUES ('7', 'admin1', null, '1', '2');
 INSERT INTO `user` VALUES ('8', 'admin2', null, '1', '2');
-INSERT INTO `user` VALUES ('9', 'super', null, '0', '1');
-INSERT INTO `user` VALUES ('34', 'test', null, '1', '3');
-INSERT INTO `user` VALUES ('35', 'test1', null, '0', '3');
+INSERT INTO `user` VALUES ('9', 'superadmin', null, '0', '3');
 
 -- ----------------------------
 -- Table structure for `user_pwd`
@@ -446,17 +444,15 @@ CREATE TABLE `user_pwd` (
 -- ----------------------------
 -- Records of user_pwd
 -- ----------------------------
-INSERT INTO `user_pwd` VALUES ('1', '1', '$2a$10$kh8ORf6NoLQ4LClmnw.nbOjPs/Iu04/1PrNDlqIJM8i2/YFwEdU32');
-INSERT INTO `user_pwd` VALUES ('2', '2', '$2a$10$B3SIovm1sazX2cnOlCPUFuivutkhYbhG5nE/GuVpLRAvpdPsDTKS6');
-INSERT INTO `user_pwd` VALUES ('3', '3', '$2a$10$6LSRjR6wZNvWdAFZsY54BeOAkHkcWhScA/s0MKvCSxSh.WsbbHjfa');
-INSERT INTO `user_pwd` VALUES ('4', '4', '$2a$10$ChMLWeJvBNlP5KiXBxQ.7eYkxq2dX19XXD5r86L5.jlcP/d3CiapS');
-INSERT INTO `user_pwd` VALUES ('5', '5', '$2a$10$fb8ffJctvgwvQI2FQ9XJIeuYpCgHmmTtsrVslz9K1xw.8FCikMOnq');
-INSERT INTO `user_pwd` VALUES ('6', '6', '$2a$10$vvHCktBiC73EM13UI.p8reApSaqn2I6ZeWaCuqkZfRiis.EwjFGIO');
-INSERT INTO `user_pwd` VALUES ('7', '7', '$2a$10$72Hl6MhLZcPiIxej.A8rueWNPKQoiGQkPwXFzkWURr8qNo.l/u.7O');
-INSERT INTO `user_pwd` VALUES ('8', '8', '$2a$10$vicft5mJHuxUqTbtnE7JDe2O/xjGgkedlGZIaemLRWPOb65gEemyS');
-INSERT INTO `user_pwd` VALUES ('9', '9', '$2a$10$dUfuNOQfFe60Bun4GNQOLuqMwQReEcIT84aGrl7F8KDsHfDZFLTie');
-INSERT INTO `user_pwd` VALUES ('31', '34', '$2a$10$J6g0Vy0IWEyjprnsbRkKb.uMfXRoJJQk8SogqqVdUSPK8twvVSQnC');
-INSERT INTO `user_pwd` VALUES ('32', '35', '$2a$10$s8qWVnquRdOCuLQ42Pu.EOJhDZVFq/7WMVe2DZdBvHQD4Owaw0er6');
+INSERT INTO `user_pwd` VALUES ('1', '1', '$2a$10$lHHEvBzg0asgPBiLaMaXAeJn2mdULpqrCUbTQJl9LWQa7A2Pq1c4i');
+INSERT INTO `user_pwd` VALUES ('2', '2', '$2a$10$ZEp7GOgESJ1DSOF8rLXCMuDj21FFQRpBPxVNmkJyyWlBOSbRsn2nu');
+INSERT INTO `user_pwd` VALUES ('3', '3', '$2a$10$KDb4CAgT.AJv4VK8yW3tLe8YILsitDIkHaoGRmgxX95F1nSZkrQvS');
+INSERT INTO `user_pwd` VALUES ('4', '4', '$2a$10$8dvvf9uP9exnny5WnYpYCOZgBISKTGL4GUoaFerGxT9QeQnnmmO2G');
+INSERT INTO `user_pwd` VALUES ('5', '5', '$2a$10$wDg1QzXWeA7TGRUntXDW3.rt01cdadjg9KCAfTrrYJDJtTH6RWERi');
+INSERT INTO `user_pwd` VALUES ('6', '6', '$2a$10$tk5gckpt4/dE1RZBLg2wVuxVcomZyUM3ObzhQUFmtQWYDxl.p4VXK');
+INSERT INTO `user_pwd` VALUES ('7', '7', '$2a$10$Z.pXXk/nUIy9ZP24JToxJeRFm8huky4wwXR0MlsTwNQJqunFAqwM.');
+INSERT INTO `user_pwd` VALUES ('8', '8', '$2a$10$GS.MJ0j.RRPV2fdfEh5zZ.aQ6jGyi43s0mGnT2ROpLRkqmTPo9Ywu');
+INSERT INTO `user_pwd` VALUES ('9', '9', '$2a$10$MZZ2swIJPIMoz2TeTPax/urcW6HnZX.84AmmwhF8/mtGoyCIypW7W');
 
 -- ----------------------------
 -- Table structure for `user_role`
@@ -485,5 +481,3 @@ INSERT INTO `user_role` VALUES ('6', '4', '3');
 INSERT INTO `user_role` VALUES ('7', '5', '3');
 INSERT INTO `user_role` VALUES ('8', '7', '2');
 INSERT INTO `user_role` VALUES ('9', '8', '2');
-INSERT INTO `user_role` VALUES ('33', '34', '3');
-INSERT INTO `user_role` VALUES ('34', '35', '3');

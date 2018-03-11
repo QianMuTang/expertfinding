@@ -5,12 +5,15 @@ import com.njust.bean.ResponseResultEnum;
 import com.njust.bean.baseBean.UserPwd;
 import com.njust.dao.baseDao.UserPwdMapper;
 import com.njust.service.UserPwdService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserPwdServiceImpl implements UserPwdService {
+    private final static Logger logger = LoggerFactory.getLogger(UserPwdServiceImpl.class);
 
     @Autowired
     UserPwdMapper userPwdMapper;

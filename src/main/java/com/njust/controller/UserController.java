@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * 普通用户、管理员、超级管理员接口
  */
 @RestController
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     //用户修改个人信息
-    @GetMapping(value = "/user/name")
+    @PutMapping(value = "/user/name")
     public ResponseResult updateUserName(User user) throws Exception{
         Integer userId = Integer.parseInt(UserUtil.getLoginId().getData().toString());
         user.setUserId(userId);
@@ -43,7 +44,7 @@ public class UserController {
     }
 
     //用户修改密码
-    @GetMapping(value = "/user/pwd")
+    @PutMapping(value = "/user/pwd")
     public ResponseResult updateUserPwd(@RequestParam(value = "pwd_one")String password_one,
                                                  @RequestParam(value = "pwd_two") String password_two) throws Exception {
         Integer userId = Integer.parseInt(UserUtil.getLoginId().getData().toString());
@@ -100,7 +101,7 @@ public class UserController {
     }
 
     //管理员修改昵称
-    @GetMapping(value = "/admin/name")
+    @PutMapping(value = "/admin/name")
     public ResponseResult updateAdminName(@RequestParam(value = "userName") String userName) throws Exception{
         Integer userId = Integer.parseInt(UserUtil.getLoginId().getData().toString());
         User user = new User();
@@ -112,7 +113,7 @@ public class UserController {
     }
 
     //管理员修改密码
-    @GetMapping(value = "/admin/pwd")
+    @PutMapping(value = "/admin/pwd")
     public ResponseResult updateAdminPwd(@RequestParam(value = "pwd_one")String password_one,
                                                   @RequestParam(value = "pwd_two") String password_two) throws Exception {
         Integer userId = Integer.parseInt(UserUtil.getLoginId().getData().toString());
@@ -169,7 +170,7 @@ public class UserController {
     }
 
     //超级管理员修改昵称
-    @GetMapping(value = "/super/name")
+    @PutMapping(value = "/super/name")
     public ResponseResult updateSuperName(@RequestParam(value = "userName") String userName) throws Exception{
         Integer userId = Integer.parseInt(UserUtil.getLoginId().getData().toString());
         User user = new User();
@@ -181,7 +182,7 @@ public class UserController {
     }
 
     //超级管理员修改密码
-    @GetMapping(value = "/super/pwd")
+    @PutMapping(value = "/super/pwd")
     public ResponseResult updateSuperPwd(@RequestParam(value = "pwd_one")String password_one,
                                                   @RequestParam(value = "pwd_two") String password_two) throws Exception {
         Integer userId = Integer.parseInt(UserUtil.getLoginId().getData().toString());
