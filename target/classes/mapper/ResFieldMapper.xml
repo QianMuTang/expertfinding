@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.njust.dao.baseDao.ResFieldMapper" >
+  <resultMap id="BaseResultMap" type="com.njust.bean.baseBean.ResField" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <constructor >
+      <idArg column="res_field_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="result_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="field_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="res_field_relate" jdbcType="DOUBLE" javaType="java.lang.Double" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    res_field_id, result_id, field_id, res_field_relate
+  </sql>
+</mapper>

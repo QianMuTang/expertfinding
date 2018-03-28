@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.njust.dao.baseDao.ExpLocMapper" >
+  <resultMap id="BaseResultMap" type="com.njust.bean.baseBean.ExpLoc" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <constructor >
+      <idArg column="exp_loc_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="expert_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="location_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="exp_loc_start_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="exp_loc_end_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    exp_loc_id, expert_id, location_id, exp_loc_start_time, exp_loc_end_time
+  </sql>
+</mapper>

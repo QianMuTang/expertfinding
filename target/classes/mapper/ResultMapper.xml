@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.njust.dao.baseDao.ResultMapper" >
+  <resultMap id="BaseResultMap" type="com.njust.bean.baseBean.Result" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <constructor >
+      <idArg column="result_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="result_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="result_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="result_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="result_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="cited_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="award" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="score" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pubilcation_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="author_ranking" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    result_id, result_name, result_desc, result_type, result_time, cited_num, award, 
+    score, pubilcation_id, author_ranking
+  </sql>
+</mapper>

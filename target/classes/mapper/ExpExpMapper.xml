@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.njust.dao.baseDao.ExpExpMapper" >
+  <resultMap id="BaseResultMap" type="com.njust.bean.baseBean.ExpExp" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <constructor >
+      <idArg column="exp_exp_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="expert1_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="expert2_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="exp_relate" jdbcType="DOUBLE" javaType="java.lang.Double" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    exp_exp_id, expert1_id, expert2_id, exp_relate
+  </sql>
+</mapper>

@@ -36,19 +36,19 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
         /**
          * Ajax待定............
          */
-        if(isAjax){
-            request.setAttribute("isAjaxRequest", isAjax);
-            request.setAttribute("message", ex.getMessage());
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/authNotPass.jsp");
-//            response.sendRedirect(request.getContextPath()+"/authNotPass.jsp");
-            dispatcher.forward(request, response);
-        }else{
+//        if(isAjax){
+//            request.setAttribute("isAjaxRequest", isAjax);
+//            request.setAttribute("message", ex.getMessage());
+//            RequestDispatcher dispatcher = request.getRequestDispatcher("/authNotPass.jsp");
+////            response.sendRedirect(request.getContextPath()+"/authNotPass.jsp");
+//            dispatcher.forward(request, response);
+//        }else{
             logger.info("权限不足");
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(ResponseResultUtil.error(ResponseResultEnum.NO_PERMISSION)));
-        }
+//        }
     }
 
     private boolean isAjaxRequest(HttpServletRequest request) {

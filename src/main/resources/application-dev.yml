@@ -14,26 +14,32 @@ mybatis:
 securityconfig:
 #  记住登录时间
   rememberme: 86400
-#  登录链接
+#  登录处理链接
   login: /api/login
+#  登录页面
+  login_page: /login_page
 #  退出成功的链接
   logoutsuccssurl: /
 #  允许访问的静态资源列表
   staticresources: /META-INF/**,/ico/**,/static/**,/images/**,/js/**,/css/**,/templates/**
 #  允许访问的URL列表
-  permitall: /,/api/register,/api/expert/**
+  permitall: /,/api/register,/api/expert/**,/expert/detail,/register,/login,/manager,/supermanager,/api/admin/**
 #  权限配置列表
-  urlroles: /druid/** = ROLE_ADMIN,ROLE_SUPER;
-             /api/user/** = ROLE_USER;
-             /api/admin/** = ROLE_ADMIN,;
-             /api/super/** = ROLE_SUPER;
-             /api/loginName = ROLE_USER,ROLE_ADMIN,ROLE_SUPER
+#  urlroles: /druid/** = ROLE_ADMIN,ROLE_SUPER;
+#             /api/user/** = ROLE_USER;
+#             /api/admin/** = ROLE_ADMIN;
+#             /api/super/** = ROLE_SUPER;
+#             /api/loginName = ROLE_USER,ROLE_ADMIN,ROLE_SUPER
 
 web:
 #  头像本地上传地址
   upload-path: C:/WEB-INF/upload/
 #  访问头像的映射地址
   map-path: /ico/**
+#  爬虫数据存储地址
+  data-path: C:/WEB-INF/json/
+#  爬虫地址
+  spider-path: C:/WEB-INF/spider/
 
 spring:
   datasource:
@@ -41,7 +47,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/expert_finding?characterEncoding=utf8&useSSL=true
     username: root
-    password: Zwq18362961518.
+    password: 123456
     # 初始化大小，最小，最大
     initialSize: 5
     minIdle: 5

@@ -25,13 +25,6 @@ public class UserController {
     /**
      * 下面是普通用户接口
      */
-    //用户注册
-    @PostMapping(value = "/register")
-    public ResponseResult register(User user, @RequestParam(value = "password") String password)throws Exception{
-        user.setPrivLevel(3);
-        userService.insertUser(user, password);
-        return ResponseResultUtil.success();
-    }
 
     //用户修改个人信息
     @PutMapping(value = "/user/name")

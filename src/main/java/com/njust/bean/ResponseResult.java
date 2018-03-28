@@ -38,10 +38,10 @@ public class ResponseResult<T> {
 
     @Override
     public String toString() {
-        return "ResponseResult{" +
-                "code=" + code +
-                ", msg='" + msg + '\'' +
+        return "{" +
+                "code='" + code + "\'" +
+                ", msg='" + msg + "\'" +
                 ", data=" + data +
-                '}';
+                "}";
     }
 }

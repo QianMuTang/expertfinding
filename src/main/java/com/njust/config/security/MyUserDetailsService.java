@@ -35,7 +35,6 @@ public class MyUserDetailsService implements UserDetailsService {
         //这里可以可以通过username（登录时输入的用户名）然后到数据库中找到对应的用户信息，并构建成我们自己的UserInfo来返回。
         try {
             User user = userService.getUserByName(username);
-
             if (user != null) {
                 String password = userPwdService.getPwdById(user.getUserId());
                 String roleName = userRoleService.findRole(user.getUserId());

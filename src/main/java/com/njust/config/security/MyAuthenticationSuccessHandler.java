@@ -3,6 +3,7 @@ package com.njust.config.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.njust.bean.CustomException;
 import com.njust.bean.ResponseResultEnum;
+import com.njust.bean.SimpleUserInfo;
 import com.njust.utils.ResponseResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,8 +39,11 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 //        super.onAuthenticationSuccess(request, response, authentication);
 
         //2、如果是返回json格式，那么我们这么写
+        SimpleUserInfo simpleUserInfo = new SimpleUserInfo();
+        simpleUserInfo.setUserName(userInfo.getUsername());
+        simpleUserInfo.setRole(userInfo.getAuthorities().toString());
         response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(objectMapper.writeValueAsString(ResponseResultUtil.error(ResponseResultEnum.LOGIN_SUCCESS)));
+        response.getWriter().write(objectMapper.writeValueAsString(ResponseResultUtil.success(simpleUserInfo)));
 
         //3、如果是要跳转到某个页面的，比如我们的那个whoim的则
 //        new DefaultRedirectStrategy().sendRedirect(request, response, "/whoim");

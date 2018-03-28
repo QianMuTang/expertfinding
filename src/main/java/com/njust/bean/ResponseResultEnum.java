@@ -20,6 +20,7 @@ public enum ResponseResultEnum {
     MISSING_NEW_PWD(40580013, "请输入新密码"),
     MISSING_NAME(40580014, "请输入新的用户名"),
     LOGIN_SUCCESS(40580015, "登录成功"),
+    ERROR_DATEFORMAT(40580016, "日期格式不正确"),
     MAIL_ERROR(405800000, "邮件发送失败");
 
     private Integer code;
