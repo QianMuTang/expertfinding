@@ -9,13 +9,14 @@ import com.njust.utils.ResponseResultUtil;
 import com.njust.utils.SendMailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 用于测试授权认证以及权限分配，权限配置在yml文件修改测试
@@ -50,6 +51,11 @@ public class LoginController {
         return "login";
     }
 
+    @RequestMapping("/userindex")
+    public String userindex(){
+        return "userindex";
+    }
+
     @RequestMapping("/manager")
     public String manager(){
         return "manager";
@@ -72,7 +78,8 @@ public class LoginController {
 
 
     //用户注册
-    @PostMapping(value = "/api/register")
+    @PostMapping("/api/register")
+    @ResponseBody
     public ResponseResult register(User user, @RequestParam(value = "password") String password)throws Exception{
         user.setPrivLevel(3);
         userService.insertUser(user, password);
@@ -89,11 +96,22 @@ public class LoginController {
     @ResponseBody
     public ResponseResult loginName(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         if (principal instanceof UserInfo) {
             return ResponseResultUtil.success(((UserInfo)principal).getUsername());
         } else {
             return ResponseResultUtil.error(ResponseResultEnum.NOT_LOGIN);
+        }
+    }
+
+    @RequestMapping("/api/logout")
+    @ResponseBody
+    public ResponseResult logoutPage (HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+            return ResponseResultUtil.success();
+        }else {
+            return ResponseResultUtil.error(ResponseResultEnum.LOGOUT_FAIL);
         }
     }
 
@@ -110,7 +128,8 @@ public class LoginController {
     }
 
     //清除缓存
-    @RequestMapping(value = "/api/removeCache")
+    @RequestMapping("/api/removeCache")
+    @ResponseBody
     public String removeCache(){
         cacheManager.getCache("baseCache").clear();
         return "缓存已清除！";

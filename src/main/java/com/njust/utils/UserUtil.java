@@ -25,6 +25,14 @@ public class UserUtil {
         return Boolean.TRUE;
     }
 
+    public static Boolean IsNull(String str){
+        if(str == null || str.trim().equals("")){
+            return Boolean.TRUE;
+        }else{
+            return Boolean.FALSE;
+        }
+    }
+
    // 用户是否存在
     public Boolean isExist(Integer userId){
         if (userMapper.selectByPrimaryKey(userId) != null){

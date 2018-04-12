@@ -92,7 +92,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //拒绝连接
                 .and().exceptionHandling().accessDeniedHandler(myAccessDeniedHandler)
                 //记住我功能
-                .and().rememberMe().tokenRepository(persistentTokenRepository()).tokenValiditySeconds(Integer.parseInt(settings.getRememberme()))
+                //.and().rememberMe().tokenRepository(persistentTokenRepository()).tokenValiditySeconds(Integer.parseInt(settings.getRememberme()))
                 .and().csrf().disable();
     }
 

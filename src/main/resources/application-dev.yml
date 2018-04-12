@@ -23,8 +23,8 @@ securityconfig:
 #  允许访问的静态资源列表
   staticresources: /META-INF/**,/ico/**,/static/**,/images/**,/js/**,/css/**,/templates/**
 #  允许访问的URL列表
-  permitall: /,/api/register,/api/expert/**,/expert/detail,/register,/login,/manager,/supermanager,/api/admin/**
-#  权限配置列表
+  permitall: /,/api/register,/api/expert/**,/expert/**,/register,/login,/manager,/supermanager,/api/admin/**,/api/super/**,/api/logout,/userindex,/api/expert/*,/mostInfluentialExpert
+##  权限配置列表
 #  urlroles: /druid/** = ROLE_ADMIN,ROLE_SUPER;
 #             /api/user/** = ROLE_USER;
 #             /api/admin/** = ROLE_ADMIN;
@@ -40,14 +40,15 @@ web:
   data-path: C:/WEB-INF/json/
 #  爬虫地址
   spider-path: C:/WEB-INF/spider/
-
+#  aminer爬虫
+  aminer-spider: aminer.py
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/expert_finding?characterEncoding=utf8&useSSL=true
     username: root
-    password: 123456
+    password: Zwq18362961518.
     # 初始化大小，最小，最大
     initialSize: 5
     minIdle: 5
@@ -69,6 +70,8 @@ spring:
     filters: stat,wall,log4j
     # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  thymeleaf:
+    mode: LEGACYHTML5
 
 #  redis:
 #    # Redis数据库索引（默认为0）

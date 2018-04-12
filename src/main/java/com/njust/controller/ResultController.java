@@ -26,16 +26,14 @@ public class ResultController {
 
     @PostMapping(value = "/result/insertResult")
     public ResponseResult insertPaper(@RequestParam(value = "type") Integer type) throws Exception{
-        //type=1:插入论文, type=2:插入专利， type=3:插入获奖
+        //type=1:插入论文, type=2:插入专利
         System.out.println("file path:"+path);
-        List<Map<String, Object>> list =  ReadJsonUtil.parse(path+"lqm_new.json", type);
+        List<Map<String, Object>> list =  ReadJsonUtil.parseResult(path+"lqm_new.json", type);
         if (type == 1){
             //插入论文
             resultService.insertPaper(list);
         } else if (type == 2){
             //插入专利
-        } else if (type == 3){
-            //插入获奖
         }
         return ResponseResultUtil.success();
     }

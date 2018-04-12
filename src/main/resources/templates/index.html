@@ -6,10 +6,16 @@
         <title>全球科技人才跟踪系统</title>
         <link rel="stylesheet" href="../static/css/bootstrap.min.css" />
         <link rel="stylesheet" href="../static/css/style.css" />
-
+        <link rel="stylesheet" href="../static/css/iconfont.css"/>
+        <script src="../static/js/jquery-1.11.1.min.js"></script>
+        <script src="../static/js/bootstrap.min.js"></script>
+        <script src="../static/js/jquery.wmuSlider.js"></script>
+        <script src="../static/js/commen.js"></script>
+        <script src="../static/js/index.js"></script>
+        <script src="../static/js/layer/layer.js"></script>
+        <script src="../static/js/koala.min.1.5.js"></script>
 
     </head>
-
     <body>
         <div class="header">
             <div class="container">
@@ -25,21 +31,34 @@
                             </button>
                             <div class="logo">
                                 <img src="../static/images/logo.ico" class="img-rounded" alt="Responsive image" />
-                                <a class="navbar-brand" href="index.html" >全球科技人才跟踪系统</a>
+                                <a class="navbar-brand" href="../templates/index.html" >全球科技人才跟踪系统</a>
                             </div>
                         </div>
 
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
-                            <ul class="nav navbar-nav cl-effect-14">
+                            <ul class="nav navbar-nav ">
                                 <li>
-                                    <form class="form-inline "  >
+                                    <div class="form-inline "  >
                                         <div class="form-group" id="normal_search" >
-                                            <input type="text" class="form-control" placeholder="无论你想到什么" style="width: 380px;margin:30px 0;" />
+                                            <div class="row">
+                                                <div class="col-md-5" style="padding-right: 0">
+                                                    <select id="selectNameOrField" class="form-control" style="margin: 30px 0px;width: 100%;">
+                                                        <option value="field">研究领域</option>
+                                                        <option value="expertName">专家姓名</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-7" style="position: relative">
+                                                    <input type="text" id="searchContent" oninput="onInput(event)" class="form-control" placeholder="无论你想到什么" style="width: 100%;margin:30px 0;" />
+                                                    <ul id="searchAssociation" style="display: none">
+
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group" id="advanced_search" style="width: 380px;display: none;">
                                             <div class="row" style="margin:30px 0;">
-                                                <div class="col-md-4">
+                                                <div class="col-md-4" >
                                                     <input type="text" class="form-control" style="width: 120px;" placeholder="专业领域" />
 
                                                 </div>
@@ -50,15 +69,14 @@
                                                     <input type="text" class="form-control" style="width: 120px;" placeholder="地域" />
                                                 </div>
                                             </div>
-
-
                                         </div>
-                                        <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
+                                        <button type="submit" id="searchBtn" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
                                         <button id="switch_search" class="btn btn-primary" style="margin-right: 40px;"><i class="glyphicon glyphicon-retweet"></i></button>
-                                    </form>
+                                    </div>
                                 </li>
-                                    <li><a href="/login" class="active">登录</a></li>
-                                    <li><a href="/register">注册</a></li>
+                                <li class="cl-effect-14"><a id="loginBtn" href="javascript:void(0);" onclick="loginCheck()" class="active">登录</a></li>
+                                <li class="cl-effect-14"><a href="/register">注册</a></li>
+
                             </ul>
                         </div><!-- /.navbar-collapse -->
                     </nav>
@@ -74,30 +92,31 @@
                         <article style="position: relative; width: 100%; opacity: 1;">
                             <div class="banner-wrap">
                                 <div class="banner-bottom-info">
-                                    <h3>一个以人才为中心的搜索平台，无论你想到什么</h3>
-                                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                                        sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    <h3>一个以人才为中心的学术搜索平台</h3>
+                                    <p> 动态监测与科技专家有关的科研动态和学术成果，帮助用户查询并跟踪专家，
+                                        对收集到信息进行多级检索；对检索数据集进行阶段性的数据维护；支持信息服务和文档转换，满足多维度的信息挖掘和统计需要；
+                                        全球科技专家的自动增量挖掘。这种松耦合结构使得应用层无需做出任何改变，就可获取更新后的科技专家信息，易于维护增量更新</p>
                                 </div>
                             </div>
                         </article>
                         <article style="position: absolute; width: 100%; opacity: 0;">
                             <div class="banner-wrap">
                                 <div class="banner-bottom-info">
-                                    <h3>Pariatur esse quam nihil vel illum voluptas nulla pariatur</h3>
-                                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                                        sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    <h3>科技人才信息源梳理</h3>
+                                    <p>根据我军科技发展的具体需求，设置重点学科领域，拟包括兵器科学与技术、光学工程、材料科学与工程、电子科学与技术、计算机科学与技术、
+                                        化学工程与技术、控制科学与工程、航空宇航科学与技术等。其次，对内梳理与对接各类国防情报及专业数据库，分析和选取有效信息源；
+                                        对外，采取统一的公开信息源自动采集标准</p>
                                 </div>
                             </div>
                         </article>
                         <article style="position: absolute; width: 100%; opacity: 0;">
                             <div class="banner-wrap">
                                 <div class="banner-bottom-info">
-                                    <h3>Occaecat esse quam nihil vel voluptas nulla pariatur</h3>
-                                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                                        sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    <h3>科技人才信息筛选指标体系设计</h3>
+                                    <p>综合各类信息源，分别针对基础研究与应用基础研究类、技术研发与应用类科技人才，
+                                        采用开源数据智能汇聚内部数据跨域检索相结合的方法，
+                                        研究与构建科技人才信息的筛选标准及指标体系。遵循分类评价原则，根据各类型评
+                                        价对象的不同特点和成长规律，采取不同的特征性评价指标和评价标准，适用不同的评价流程和评价方法。</p>
                                 </div>
                             </div>
                         </article>
@@ -120,69 +139,185 @@
         </div>
 
 
-        <div class="testimonials">
+        <div class="testimonials" style="margin-bottom: 50px">
             <div class="container">
                     <a>2017最具影响力专家</a>
                     <small>
-                        (<a href=" ">计算机领域</a>)
+                        (<a href="/mostInfluentialExpert">计算机领域</a>)
                     </small>
-                <div class="testimonials-grids">
-                    <div class="col-md-4 testimonials-grid">
-                        <div class="col-xs-4 testimonials-grid-left">
-                            <img src="images/li.png" alt=" " class="img-responsive" />
-                        </div>
-                        <div class="col-xs-8 testimonials-grid-right">
-                            <div class="testimonials-grid-right-p">
-                                <p>南京理工大学教授，博士生导师，软件工程系主任，江苏省社会公共安全重点实验室副主任<span>李千目</span></p>
+                <!--<div class="testimonials-grids" id="mostInfluential-box">-->
+                <!--</div>-->
+                <!-- 轮播图 代码 开始 -->
+                <div id="fsD1" class="focus headline-right">
+                    <div id="D1pic1" class="fPic">
+                        <div class="fcon" style="display: none;">
+                            <div class="testimonials-grids" id="mostInfluential-box1">
+
                             </div>
                         </div>
-                        <div class="clearfix"> </div>
-                    </div>
-                    <div class="col-md-4 testimonials-grid">
-                        <div class="col-xs-4 testimonials-grid-left">
-                            <img src="images/yang.jpg" alt=" " class="img-responsive" />
-                        </div>
-                        <div class="col-xs-8 testimonials-grid-right">
-                            <div class="testimonials-grid-right-p">
-                                <p>南京理工大学教授，博士生导师，计算机科学院副院长，从事模式识别理论与应用方面的研究<span>杨健</span></p>
+                        <div class="fcon" style="display: none;">
+                            <div class="testimonials-grids" id="mostInfluential-box2">
+
                             </div>
                         </div>
-                        <div class="clearfix"> </div>
                     </div>
-                    <div class="col-md-4 testimonials-grid">
-                        <div class="col-xs-4 testimonials-grid-left">
-                            <img src="images/zhang.jpg" alt=" " class="img-responsive" />
+                    <div class="fbg">
+                        <div class="D1fBt" id="D1fBt">
+                            <a href="javascript:void(0)" hidefocus="true" target="_self" class="current"><i>1</i></a>
+                            <a href="javascript:void(0)" hidefocus="true" target="_self" class=""><i>2</i></a>
                         </div>
-                        <div class="col-xs-8 testimonials-grid-right">
-                            <div class="testimonials-grid-right-p">
-                                <p>南京理工大学教授, 博士生导师, 江苏省计算机学会常务理事, 从事信息安全理论与技术研究
-                                    <span>张宏</span></p>
-                            </div>
-                        </div>
-                        <div class="clearfix"> </div>
                     </div>
-                    <div class="clearfix"> </div>
+                    <span class="prev"></span>
+                    <span class="next"></span>
                 </div>
+                <script type="text/javascript">
+                    Qfast.add('widgets', { path:"../static/js/terminator2.2.min.js", type: "js", requires: ['fx'] });
+                    Qfast(false, 'widgets', function () {
+                        K.tabs({
+                            id: 'fsD1',   //焦点图包裹id
+                            conId: "D1pic1",  //** 大图域包裹id
+                            tabId:"D1fBt",
+                            tabTn:"a",
+                            conCn: '.fcon', //** 大图域配置class
+                            auto: 0,   //自动播放 1或0
+                            effect: 'fade',   //效果配置
+                            eType: 'click', //** 鼠标事件
+                            pageBt:true,//是否有按钮切换页码
+                            bns: ['.prev', '.next'],//** 前后按钮配置class
+                            interval: 5000  //** 停顿时间
+                        })
+                    })
+                </script>
+                <!-- 代码 结束 -->
             </div>
         </div>
 
-        <script src="../static/js/jquery-1.11.1.min.js"></script>
-        <script src="../static/js/bootstrap.min.js"></script>
-        <script src="../static/js/jquery.wmuSlider.js"></script>
-
         <script>
+            $("#searchBtn").click(function () {
+                var type = $("#selectNameOrField").val();
+                searchContent = encodeURI(encodeURI($("#searchContent").val()));
+                if(type == ""){
+                    layer.msg("请选择需要搜索的分类",{time:1000});
+                    return;
+                }
+                if(type == "field"){ //按研究领域查询
+                    window.location.href='/expert?type=field&searchContent=' + searchContent;
+                }else{
+                    window.location.href='/expert?type=expertName&searchContent=' + searchContent;
+                }
+            })
 
             $('.example1').wmuSlider();
 
-            $('span').click(function () {
-                $(window.location).prop('href','/expert/detail');
-            })
 
             $('#switch_search').click(function (e) {
                 e.preventDefault()
                 $('#advanced_search').toggle()
                 $('#normal_search').toggle()
             })
+            
+            function loginCheck() {
+                var userName = getCookies("userName");
+                if( userName != null){
+                    var role = getCookies("role");
+                    if(role =="[ROLE_ADMIN]"){
+                        window.location.href='/manager';
+                    }
+                    if(role =="[ROLE_SUPER]"){
+                        window.location.href='/supermanager ';
+                    }
+                    if(role =="[ROLE_USER]"){
+                        window.location.href='/userindex ';
+                    }
+                }else{
+                    $("#loginBtn").attr("href","/login");
+                }
+            }
+
+            $(function () {
+                //fieldId = 1 ，数据挖掘领域
+                $.ajax({
+                    type: 'GET',
+                    url: "/api/expert/mostInfluential",
+                    data: {
+                        fieldId: 1,
+                    } ,
+                    dataType: "json",
+                    success: function(res){
+                        if(res.msg == "success"){
+                            if(res.msg == "success"){
+                                var mostInfluentialExpertList = res.data;
+                                $.each(mostInfluentialExpertList,function(i,row){
+                                    $("#mostInfluential-box1").append(
+                                        '<div class="col-md-4 testimonials-grid">' +
+                                            '<div class="col-xs-4 testimonials-grid-left">' +
+                                                '<img src="/ico/'+ row.icoName +'" alt="" class="img-responsive" />' +
+                                            '</div>' +
+                                            '<div class="col-xs-8 testimonials-grid-right">' +
+                                                '<div class="testimonials-grid-right-p">' +
+                                                    '<p > <a href="/expert/detail?expertId='+ row.expertId +'" style="font-size: 20px;font-weight: bold;">'+ row.expertName +'</a></p>' +
+                                                    '<div style="color: #B46425 ;padding: 0 10px;">' +
+                                                        '<span style="font-size: small;font-weight: bold">评分: '+ row.expertScore +'</span><i class="iconfont icon-vertical_line"></i>' +
+                                                        '<span style="font-size: small;font-weight: bold">论文: '+ row.paperNum+'</span><i class="iconfont icon-vertical_line"></i>' +
+                                                        '<span style="font-size: small;font-weight: bold">引用: '+ row.hIndex +'</span>' +
+                                                    '</div>' +
+                                                    '<p style="margin-top: 5px;font-size: 16px;"><i class="glyphicon glyphicon-inbox"></i>&nbsp;'+ row.professionalTitle +'</p>' +
+                                                    '<p style="margin-top: 5px;font-size: 16px;"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;'+ row.employer +'</p>'+
+                                                '</div>' +
+                                            '</div>' +
+                                            '<div class="clearfix"> </div>' +
+                                        '</div>'
+                                    );
+                                })
+                            }else{
+                                layer.msg("查询失败",{time:1000})
+                            }
+                        }
+                    }
+                });
+
+                //fieldId = 2,人工智能领域
+                $.ajax({
+                    type: 'GET',
+                    url: "/api/expert/mostInfluential",
+                    data: {
+                        fieldId: 2,
+                    } ,
+                    dataType: "json",
+                    success: function(res){
+                        if(res.msg == "success"){
+                            if(res.msg == "success"){
+                                var mostInfluentialExpertList = res.data;
+                                $.each(mostInfluentialExpertList,function(i,row){
+                                    $("#mostInfluential-box2").append(
+                                        '<div class="col-md-4 testimonials-grid">' +
+                                        '<div class="col-xs-4 testimonials-grid-left">' +
+                                        '<img src="/ico/'+ row.icoName +'" alt="" class="img-responsive" />' +
+                                        '</div>' +
+                                        '<div class="col-xs-8 testimonials-grid-right">' +
+                                        '<div class="testimonials-grid-right-p">' +
+                                        '<p > <a href="/expert/detail?expertId='+ row.expertId +'" style="font-size: 20px;font-weight: bold;">'+ row.expertName +'</a></p>' +
+                                        '<div style="color: #B46425 ;padding: 0 10px;">' +
+                                        '<span style="font-size: small;font-weight: bold">评分: '+ row.expertScore +'</span><i class="iconfont icon-vertical_line"></i>' +
+                                        '<span style="font-size: small;font-weight: bold">论文: '+ row.paperNum+'</span><i class="iconfont icon-vertical_line"></i>' +
+                                        '<span style="font-size: small;font-weight: bold">引用: '+ row.hIndex +'</span>' +
+                                        '</div>' +
+                                        '<p style="margin-top: 5px;font-size: 16px;"><i class="glyphicon glyphicon-inbox"></i>&nbsp;'+ row.professionalTitle +'</p>' +
+                                        '<p style="margin-top: 5px;font-size: 16px;"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;'+ row.employer +'</p>'+
+                                        '</div>' +
+                                        '</div>' +
+                                        '<div class="clearfix"> </div>' +
+                                        '</div>'
+                                    );
+                                })
+                            }else{
+                                layer.msg("查询失败",{time:1000})
+                            }
+                        }
+                    }
+                });
+            })
+
         </script>
 
     </body>

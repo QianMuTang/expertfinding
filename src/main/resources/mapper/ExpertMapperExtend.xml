@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.njust.dao.ExpertMapperExtend" >
+    <resultMap id="BaseResultMap" type="com.njust.bean.ExpertAndField" >
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id property="expertId" column="expert_id"/>
+        <result property="expertName" column="expert_name"/>
+        <result property="gender" column="gender"/>
+        <result property="contact" column="contact"/>
+        <result property="email" column="email"/>
+        <result property="education" column="education"/>
+        <result property="nation" column="nation"/>
+        <result property="politicalStatus" column="political_status"/>
+        <result property="birthday" column="birthday"/>
+        <result property="expertScore" column="expert_score"/>
+        <result property="icoName" column="ico_name"/>
+        <result property="introduce" column="introduce"/>
+        <result property="homepage" column="homepage"/>
+        <result property="country" column="country"/>
+        <result property="tag" column="tag"/>
+        <result property="hIndex" column="h_index"/>
+        <result property="gIndex" column="g_index"/>
+        <result property="sociability" column="sociability"/>
+        <result property="diversity" column="diversity"/>
+        <result property="professionalTitle" column="professional_title"/>
+        <result property="paperNum" column="paper_num"/>
+        <result property="patentNum" column="patent_num"/>
+        <result property="awardNum" column="award_num"/>
+        <result property="employer" column="employer"/>
+        <association property="field" javaType="com.njust.bean.baseBean.Field">
+            <id property="fieidId" column="fieid_id"/>
+            <result property="fieldName" column="field_name"/>
+            <result property="fieldDesc" column="field_desc"/>
+        </association>
+    </resultMap>
+    <select id="selectExpertAndField" resultMap="BaseResultMap">
+        SELECT expert_id, expert_name, expert_score, education,paper_num, h_index,professional_title,employer,tag,field.field_name  FROM expert LEFT JOIN field ON expert.field_id = field.fieid_id WHERE 1=1
+        <if test="expertName != null and expertName != '' " >
+            and expert_name like concat(#{expertName},'%')
+        </if>
+        <if test="field !=null and field != ''">
+            and field.field_name like concat('%',#{field},'%')
+        </if>
+    </select>
+    
+    <select id="selectExpertAndFieldById" resultMap="BaseResultMap">
+        SELECT *
+        FROM expert LEFT JOIN field ON expert.field_id = field.fieid_id
+        WHERE expert_id = #{expertId}
+    </select>
+
+</mapper>

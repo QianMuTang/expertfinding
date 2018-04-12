@@ -147,3 +147,12 @@ input, textarea {
 }
 
 /*# sourceMappingURL=style.css.map */
+/* 登录提示  */
+.tip-box{
+    display: block;
+    text-align: center;
+    height: 20px;
+    line-height: 0px;
+    color: #f00;
+    font-size: 13px;
+    }

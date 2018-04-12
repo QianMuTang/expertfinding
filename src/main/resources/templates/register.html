@@ -14,36 +14,38 @@
 
 
         <!-- Start Sign In Form -->
-        <form action="#" class="fh5co-form animate-box fadeIn animated-fast" data-animate-effect="fadeIn" style="
+        <form id="registerForm" class="fh5co-form animate-box fadeIn animated-fast" data-animate-effect="fadeIn" style="
     margin-top: 150px;">
             <h2>注册</h2>
-            <!--<div class="form-group">-->
-                <!--<div class="alert alert-success" role="alert">Your info has been saved.</div>-->
-            <!--</div>-->
             <div class="form-group">
-                <label for="name" class="sr-only">用户名</label>
-                <input type="text" class="form-control" id="name" placeholder="用户名" autocomplete="off" />
+                <label for="userName" class="sr-only">用户名</label>
+                <input type="text" class="form-control" id="userName" name="userName" placeholder="用户名" autocomplete="off" />
             </div>
             <div class="form-group">
                 <label for="email" class="sr-only">邮件地址</label>
-                <input type="email" class="form-control" id="email" placeholder="邮件地址" autocomplete="off" />
+                <input type="email" class="form-control" id="email" name="email" placeholder="邮件地址" autocomplete="off" />
             </div>
             <div class="form-group">
                 <label for="password" class="sr-only">密码</label>
-                <input type="password" class="form-control" id="password" placeholder="密码" autocomplete="off" />
+                <input type="password" class="form-control" id="password" name="password" placeholder="密码" autocomplete="off" />
             </div>
             <div class="form-group">
-                <label for="re-password" class="sr-only">确认密码</label>
-                <input type="password" class="form-control" id="re-password" placeholder="确认密码" autocomplete="off" />
+                <label for="repassword" class="sr-only">确认密码</label>
+                <input type="password" class="form-control" id="repassword" name="repassword" placeholder="确认密码" autocomplete="off" />
             </div>
             <div class="form-group">
-                <label for="remember"><input type="checkbox" id="remember" /> 记住我</label>
+                <label for="repassword" class="sr-only">是否推送</label>
+                <input type="radio" class="" name="ispush" value="1" checked="checked"/> 推送 &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" class="" name="ispush" value="0"/> 不推送
+            </div>
+            <div class="form-group">
+                <label for="remember"><input type="checkbox" id="remember" name="remember"/> 记住我</label>
             </div>
             <div class="form-group">
                 <p>已经注册? <a href="/login">去登录</a></p>
             </div>
             <div class="form-group">
-                <input type="submit" value="立即注册" class="btn btn-primary" />
+                <input type="submit" id="registerBtn" value="立即注册" class="btn btn-primary" />
             </div>
         </form>
         <!-- END Sign In Form -->
@@ -53,5 +55,76 @@
 
 <script src="../static/js/jquery-1.11.1.min.js"></script>
 <script src="../static/js/bootstrap.min.js"></script>
+<script src="../static/js/layer/layer.js"></script>
+<script src="../static/js/jquery.validate.js"></script>
+<script src="../static/js/messages_zh.js"></script>
+<script src="../static/js/commen.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#registerBtn").click(function () {
+            //表单验证
+            $('#registerForm').validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                rules: {
+                    userName: {
+                        required: true
+                    },
+                    password: {
+                        required: true
+                    },
+                    repassword: {
+                        required: true,
+                        equalTo: "#password"
+                    },
+                    email: {
+                        required: true,
+                        email: true,
+                    },
+                },
+                highlight: function(element) { // hightlight error inputs
+                    $(element)
+                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                },
+
+                success: function(label) {
+                    label.closest('.form-group').removeClass('has-error');
+                    label.remove();
+                },
+                //表单提交
+                submitHandler: function(form) {
+                    var userName = $("#userName").val();
+                    var email = $("#email").val();
+                    var password = $("#password").val();
+                    var repassword = $("#repassword").val();
+                    var ispush = $("input[name='ispush']:checked").val();
+                    var remember = $("#remember").is(":checked");
+                    $.post('/api/register',{
+                        userName:userName,
+                        password:password,
+                        userEmail:email,
+                        isPush:ispush
+                    },function(res){
+                        if(res.msg == "success"){
+                            layer.msg("注册成功！",{time:1000},function () {
+                                if(remember == true){
+                                    setCookies("userName",userName);
+                                };
+                                window.location.href = "login";
+                            });
+
+                        }
+                        else{
+                            layer.msg(res.msg+"，请重新填写信息",{time:1000},function () {
+                                $('#registerForm')[0].reset();
+                            });
+                        }
+                    });
+                }
+            });
+        })
+    })
+</script>
 </body>
 </html>

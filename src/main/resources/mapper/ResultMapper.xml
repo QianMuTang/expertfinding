@@ -16,6 +16,10 @@
       <arg column="score" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="pubilcation_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="author_ranking" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="keyword" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="classify_num" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="link" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="apply_num" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
@@ -23,6 +27,6 @@
       WARNING - @mbg.generated
     -->
     result_id, result_name, result_desc, result_type, result_time, cited_num, award, 
-    score, pubilcation_id, author_ranking
+    score, pubilcation_id, author_ranking, keyword, classify_num, link, apply_num
   </sql>
 </mapper>

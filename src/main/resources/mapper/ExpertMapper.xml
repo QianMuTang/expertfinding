@@ -17,6 +17,20 @@
       <arg column="birthday" jdbcType="DATE" javaType="java.util.Date" />
       <arg column="expert_score" jdbcType="DOUBLE" javaType="java.lang.Double" />
       <arg column="ico_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="field_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="introduce" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="homepage" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="country" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tag" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="h_index" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="g_index" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="sociability" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="diversity" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="professional_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="paper_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="patent_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="award_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="employer" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
@@ -24,6 +38,8 @@
       WARNING - @mbg.generated
     -->
     expert_id, expert_name, gender, contact, email, education, nation, political_status, 
-    birthday, expert_score, ico_name
+    birthday, expert_score, ico_name, field_id, introduce, homepage, country, tag, h_index, 
+    g_index, sociability, diversity, professional_title, paper_num, patent_num, award_num, 
+    employer
   </sql>
 </mapper>

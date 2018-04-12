@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html" />
+    <title>全球科技人才跟踪系统</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../static/css/style.css" />
+</head>
+<body>
+<div class="header">
+    <div class="container">
+        <div class="header-nav">
+            <nav class="navbar navbar-default">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="logo">
+                        <img src="../static/images/logo.ico" class="img-rounded" alt="Responsive image" />
+                        <a class="navbar-brand" href="../templates/index.html">全球科技人才跟踪系统</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="container" style="padding: 0 20px;">
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-2" style="height: 100%;border-right: 1px solid #eeeeee;padding-right: 40px;">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active" ><a href="#show" data-toggle="tab">个人信息</a></li>
+                <li><a href="#paper" data-toggle="tab">专家最新论文</a></li>
+                <li><a href="#patent" data-toggle="tab">专家最新专利</a></li>
+                <li><a href="#prize" data-toggle="tab">专家最新获奖</a></li>
+                <li><a href="#info" data-toggle="tab">跟踪专家信息</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-10">
+            <div class="tab-content">
+
+                <div class="tab-pane active" id="show">
+                    个人信息1
+                    跟踪专家信息
+                </div>
+
+                <div class="tab-pane" id="paper">
+                    个人信息2
+                    跟踪专家信息
+                </div>
+
+                <div class="tab-pane" id="patent">
+                    个人信息3
+                    跟踪专家信息
+                </div>
+
+                <div class="tab-pane" id="prize">
+                    个人信息4
+                    跟踪专家信息
+                </div>
+
+                <div class="tab-pane" id="info">
+                    个人信息5
+                    跟踪专家信息
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="../static/js/jquery-1.11.1.min.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+<script src="../static/js/echarts.min.js"></script>
+</body>
+</html>

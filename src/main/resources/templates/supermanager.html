@@ -1,308 +1,506 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
-        <meta charset="UTF-8"/>
-        <title>全球科技人才跟踪系统</title>
-        <link rel="stylesheet" href="../static/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="../static/css/style.css" />
-    </head>
-    <body>
-        <div class="header">
-            <div class="container">
-                <div class="header-nav">
-                    <nav class="navbar navbar-default">
-                        <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <div class="logo">
-                                <img src="../static/images/logo.ico" class="img-rounded" alt="Responsive image" />
-                                <a class="navbar-brand" href="index.html">全球科技人才跟踪系统</a>
-                            </div>
-                        </div>
-                    </nav>
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html" />
+    <title>全球科技人才跟踪系统</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <link rel="stylesheet" href="../static/css/pagination.css" />
+    <style>
+        #addForm input[type="submit"],#modifyForm input[type="submit"]{
+            height: 28px;
+            line-height: 28px;
+            margin: 5px 5px 0;
+            padding: 0 15px;
+            color: #fff;
+            border-radius: 2px;
+            font-weight: 400;
+            background-color: #47d1d1;
+            border:1px solid  #47d1d1;
+            text-decoration: none;
+            font-size: 16px;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="container">
+        <div class="header-nav">
+            <nav class="navbar navbar-default">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="logo">
+                        <img src="../static/images/logo.ico" class="img-rounded" alt="Responsive image" />
+                        <a class="navbar-brand" href="../templates/index.html">全球科技人才跟踪系统</a>
+                    </div>
                 </div>
-            </div>
+                <div class="personal-info">
+                    欢迎 【<a class="username" id="username" style="color: #ff0000;text-decoration: underline"></a>】超级管理员
+                    <button type="button" class="btn btn-primary" onclick="logout()" style="margin-left: 20px;">注销</button>
+                </div>
+
+            </nav>
+
         </div>
-        <div class="container" style="padding: 0 20px;">
-            <div class="row" style="margin-top: 20px;">
-                <div class="col-md-2" style="height: 100%;border-right: 1px solid #eeeeee;padding-right: 40px;">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li class="active" ><a href="#show" data-toggle="tab">显示管理员</a></li>
-                        <li><a href="#add" data-toggle="tab">增加管理员</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-10">
-                    <div class="tab-content">
+    </div>
+</div>
+<div class="container" style="padding: 0 20px;">
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-2" style="height: 100%;border-right: 1px solid #eeeeee;padding-right: 40px;">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active" ><a href="#show" data-toggle="tab">显示管理员</a></li>
+            </ul>
+        </div>
 
-                        <div class="tab-pane active" id="show">
-                            <div>
-                                <form class="form-inline">
-                                    <div class="form-group">
-                                        <div class="row" style="margin:25px 0;">
-                                            <div class="col-md-4">
-                                                <input type="text" class="form-control" style="width: 100px;" placeholder="用户ID" />
-                                            </div>
-                                            <div class="col-md-4">
-                                                <input type="text" class="form-control" style="width: 100px;" placeholder="用户名" />
-                                            </div>
-                                        </div>
+        <div class="col-md-10">
+            <div class="tab-content">
 
-
+                <div class="tab-pane active" id="show">
+                    <div>
+                        <div class="form-inline">
+                            <div class="form-group" style="width:90%;">
+                                <div class="row" style="margin:25px 0;">
+                                    <div class="col-md-6">
+                                        <button type="button" class="btn btn-default" id="deleteUser">删除管理员</button>
+                                        <button type="button" class="btn btn-default" id="modifyUser">修改管理员</button>
+                                        <button type="button" class="btn btn-default" id="addUser">新增管理员</button>
                                     </div>
-                                    <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-                                </form>
-                            </div>
-                            <div class="bootstrap-table">
-                                <div class="fixed-table-toolbar"></div>
-                                <div class="fixed-table-container" style="padding-bottom: 0px;">
-                                    <div class="fixed-table-header" style="display: none;">
-                                        <table></table>
-                                    </div>
-                                    <div class="fixed-table-body">
-                                        <div class="fixed-table-loading" style="top: 42px; display: none;">加载中，请稍等...</div>
-                                            <table id="table" class="table table-hover" data-toggle="table" data-pagination="true" data-side-pagination="server" data-url="/examples/bootstrap_table/data" data-response-handler="responseHandler">
-                                            <thead>
-                                            <tr>
-                                                <th class="bs-checkbox" style="width: 36px; " data-field="state">
-                                                    <div class="th-inner ">
-                                                        <input name="btSelectAll" type="checkbox" />
-                                                    </div>
-                                                    <div class="fht-cell"></div>
-                                                </th>
-                                                <th style="" data-field="id">
-                                                    <div class="th-inner ">用户ID</div>
-                                                    <div class="fht-cell"></div>
-                                                </th>
-                                                <th style="" data-field="name">
-                                                    <div class="th-inner ">用户名</div>
-                                                    <div class="fht-cell"></div>
-                                                </th>
-                                                <th style="" data-field="password">
-                                                    <div class="th-inner ">密码</div>
-                                                    <div class="fht-cell"></div>
-                                                </th>
-                                                <th style="" data-field="email">
-                                                    <div class="th-inner ">邮箱</div>
-                                                    <div class="fht-cell"></div>
-                                                </th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr data-index="0">
-                                                <td  class="bs-checkbox">
-                                                    <input data-index="0" name="btSelectItem" type="checkbox" /> >
-                                                </td>
-                                                <td style="">0001</td>
-                                                <td style="">张三</td>
-                                                <td style="">123</td>
-                                                <td style="">111@qq.com</td>
-                                            </tr>
-                                            <tr data-index="1">
-                                                <td  class="bs-checkbox">
-                                                    <input data-index="1" name="btSelectItem" type="checkbox" />
-                                                </td>
-                                                <td style="">0002</td>
-                                                <td style="">张三</td>
-                                                <td style="">123</td>
-                                                <td style="">111@qq.com</td>
-                                            </tr>
-                                            <tr data-index="2">
-                                                <td  class="bs-checkbox">
-                                                    <input data-index="2" name="btSelectItem" type="checkbox" />
-                                                </td>
-                                                <td style="">0003</td>
-                                                <td style="">张三</td>
-                                                <td style="">123</td>
-                                                <td style="">111@qq.com</td>
-                                            </tr>
-                                            <tr data-index="2">
-                                                <td  class="bs-checkbox">
-                                                    <input data-index="2" name="btSelectItem" type="checkbox" />
-                                                </td>
-                                                <td style="">0004</td>
-                                                <td style="">张三</td>
-                                                <td style="">123</td>
-                                                <td style="">111@qq.com</td>
-                                            </tr>
-                                            <tr data-index="3">
-                                                <td  class="bs-checkbox">
-                                                    <input data-index="3" name="btSelectItem" type="checkbox" />
-                                                </td>
-                                                <td style="">0005</td>
-                                                <td style="">张三</td>
-                                                <td style="">123</td>
-                                                <td style="">111@qq.com</td>
-                                            </tr>
-                                            <tr data-index="4">
-                                                <td  class="bs-checkbox">
-                                                    <input data-index="4" name="btSelectItem" type="checkbox" />
-                                                </td>
-                                                <td style="">0006</td>
-                                                <td style="">张三</td>
-                                                <td style="">123</td>
-                                                <td style="">111@qq.com</td>
-                                            </tr>
-                                            <tr data-index="5">
-                                                <td  class="bs-checkbox">
-                                                    <input data-index="5" name="btSelectItem" type="checkbox" />
-                                                </td>
-                                                <td style="">0007</td>
-                                                <td style="">张三</td>
-                                                <td style="">123</td>
-                                                <td style="">111@qq.com</td>
-                                            </tr>
-                                            </tbody>
-                                            </table>
-                                    </div>
-                                    <div class="fixed-table-footer" style="display: none;">
-                                        <table>
-                                            <tbody>
-                                           <tr></tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="fixed-table-pagination" style="display: block;">
-                                    <div class="pull-left pagination-detail">
-                                        <span class="pagination-info">每页显示</span>
-                                        <span class="page-list">
-                                            <span class="btn-group dropup">
-                                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                                    <span class="page-size">10</span>
-                                                    <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li class="active" role="menuitem">
-                                                        <a herf="#">10</a>
-                                                    </li>
-                                                    <li class="" role="menuitem">
-                                                        <a herf="#">25</a>
-                                                    </li>
-                                                    <li class="" role="menuitem">
-                                                        <a herf="#">50</a>
-                                                    </li>
-                                                </ul>
-                                            </span>
-                                            条数据
-                                        </span>
-                                    </div>
-                                    <div class="pull-right pagination">
-                                        <ul class="pagination">`
-                                            <li class="page-item page-pre">
-                                                <a class="page-link" href="#">0</a>
-                                            </li>
-                                            <li class="page-item active">
-                                                <a class="page-link" href="#">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">3</a>
-                                            </li>
-                                            <li class="page-item page-last-separator disabled">
-                                                <a class="page-link" href="#">....</a>
-                                            </li>
-                                            <li class="page-item page-last">
-                                                <a class="page-link" href="#">10</a>
-                                            </li>
-                                            <li class="page-item page-next">
-                                                <a class="page-link" href="#">></a>
-                                            </li>
-                                        </ul>
+                                    <div class="col-md-5">
+                                        <input type="text" id="searchContent" class="form-control" style="width: 80%;margin-top: -1px;" placeholder="管理员姓名或邮箱" />
+                                        <button class="btn btn-default" id="searchBtn" style="display: inline-block;margin-left: 5px;"><i class="glyphicon glyphicon-search"></i></button>
                                     </div>
                                 </div>
                             </div>
-                            <div><button type="submit" class="btn btn-default">删除管理员</button></div>
-
                         </div>
+                    </div>
+                    <div class="bootstrap-table">
+                        <div class="fixed-table-container" style="padding-bottom: 0px;">
+                            <div class="fixed-table-body">
+                                <div class="fixed-table-loading" style="top: 42px; display: none;">加载中，请稍等...</div>
+                                <table id="table" class="table table-hover" data-toggle="table" data-pagination="true" data-side-pagination="server" data-url="/examples/bootstrap_table/data" data-response-handler="responseHandler">
+                                    <thead>
+                                    <tr>
+                                        <th class="bs-checkbox" style="width: 36px; " data-field="state">
+                                            <div class="th-inner ">
+                                                <input name="btSelectAll" id="show-selectAll" type="checkbox" />
+                                            </div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="id">
+                                            <div class="th-inner ">管理员ID</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="name">
+                                            <div class="th-inner ">管理员姓名</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="email">
+                                            <div class="th-inner ">邮箱</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="show-tbody">
 
-                        <div class="tab-pane" id="add">
-                            <div>
-                                <div class="form-group">
-
-                                        <div class="col-md-2">
-                                            <input type="text" class="form-control" style="width: 100px;" placeholder="用户ID" />
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="text" class="form-control" style="width: 100px;" placeholder="用户名" />
-                                        </div>
-                                        <div class="col-md-2">
-                                        <button type="submit" class="btn btn-default">确认</button>
-                                        </div>
-
-
-
-                                </div>
-
-
-
-                            </div>
-                            <div>
-                                 <table id="table1" class="table table-hover" data-toggle="table" data-pagination="true" data-side-pagination="server" data-url="/examples/bootstrap_table/data" data-response-handler="responseHandler">
-                                        <thead>
-                                        <tr>
-                                            <th class="bs-checkbox" style="width: 36px; " data-field="state">
-                                                <div class="th-inner ">
-                                                    <input name="btSelectAll" type="checkbox" />
-                                                </div>
-                                                <div class="fht-cell"></div>
-                                            </th>
-                                            <th style="" data-field="id">
-                                                <div class="th-inner ">用户ID</div>
-                                                <div class="fht-cell"></div>
-                                            </th>
-                                            <th style="" data-field="name">
-                                                <div class="th-inner ">用户名</div>
-                                                <div class="fht-cell"></div>
-                                            </th>
-                                            <th style="" data-field="password">
-                                                <div class="th-inner ">密码</div>
-                                                <div class="fht-cell"></div>
-                                            </th>
-                                            <th style="" data-field="email">
-                                                <div class="th-inner ">邮箱</div>
-                                                <div class="fht-cell"></div>
-                                            </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr data-index="0">
-                                            <td  class="bs-checkbox">
-                                                <input data-index="0" name="btSelectItem" type="checkbox" />
-                                            </td>
-                                            <td style="">0001</td>
-                                            <td style="">张三</td>
-                                            <td style="">123</td>
-                                            <td style="">111@qq.com</td>
-                                        </tr>
-                                        </tbody>
+                                    </tbody>
                                 </table>
+                                <div id="divpagelist"></div>
                             </div>
-                            <div>
-                                <button type="submit" class="btn btn-default">增加管理员</button>
-                            </div>
-
-
-
-
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-        <script src="../static/js/jquery-1.11.1.min.js"></script>
-        <script src="../static/js/bootstrap.min.js"></script>
-        <script src="../static/js/echarts.min.js"></script>
+    </div>
+
+</div>
+<script src="../static/js/jquery-1.11.1.min.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+<script src="../static/js/echarts.min.js"></script>
+<script src="../static/js/commen.js"></script>
+<script src="../static/js/layer/layer.js"></script>
+<script src="../static/js/jquery.validate.js"></script>
+<script src="../static/js/messages_zh.js"></script>
+<script>
+
+    function logout() {
+
+        $.ajax({
+            type: 'GET',
+            url: "/api/logout",
+            dataType: "json",
+            success: function(res){
+                if(res.code == 1){
+                    layer.msg('注销成功',{ time: 1000});
+                    window.location.href='/login';
+                }
+                else{
+                    layer.msg('注销失败',{ time: 1000});
+                }
+            }
+
+        })
 
 
+    }
+    //获取url传的参数
+    var page = getUrlParam("page");
+    if(page == "" || page ==null){
+        page = 1;
+    }
+    $('document').ready(function(){
+        var userName = getCookies("userName");
+        if(userName != null){
+            $("#username").text(userName);
+        }else {
+            //获取当前用户名
+            $.ajax({
+                type: 'GET',
+                url: "/api/loginName",
+                data: {} ,
+                dataType: "json",
+                success: function(res){
+                    if(res.msg == "success"){
+                        $("#username").text(res.data.username);
+                    }
+                }
+            });
+        }
 
-    </body>
+
+        var searchContent = getUrlParam("searchContent");
+        if(searchContent !=null){
+            $("#searchContent").val(searchContent);
+                //获取搜索结果管理员信息
+                $.ajax({
+                    type: 'GET',
+                    url: "/api/super",
+                    data: {
+                        page:page,
+                        pageSize:10,
+                        userName: searchContent,
+                    } ,
+                    dataType: "json",
+                    success: function(res){
+                        if(res.code == 1){
+                            var userList = res.data.list;
+                            $(".show-tbody").empty();
+                            //循环为表格添加数据
+                            $.each(userList,function(i,row){
+                                $(".show-tbody").append(
+                                    '<tr data-index="'+(i+1)+'">'+
+                                    '<td  class="bs-checkbox">'+
+                                    '<input name="showSelectItem" type="checkbox" value="'+ row.userId+'"/>'+
+                                    '</td>'+
+                                    '<td style="">'+ row.userId +'</td>'+
+                                    '<td style="">'+ row.userName +'</td>'+
+                                    '<td style="">'+ row.userEmail +'</td>'+
+                                    '</tr>'
+                                )
+                            })
+                            var pageHtml = page_list(res.data.pageSize ,res.data.pageNum , res.data.total,10,"supermanager");
+                            $(".page-list").remove();//先清空div
+                            $('#divpagelist').after('<div class="page-list default">' + pageHtml + '</div>');
+                        }
+                    }
+                });
+        }else{
+            //获取管理员信息
+            $.ajax({
+                type: 'GET',
+                url: "/api/super",
+                data: {
+                    page:page,
+                    pageSize:10
+                } ,
+                dataType: "json",
+                success: function(res){
+                    if(res.code == 1){
+                        var userList = res.data.list;
+                        //循环为表格添加数据
+                        $.each(userList,function(i,row){
+                            $(".show-tbody").append(
+                                '<tr data-index="'+(i+1)+'">'+
+                                '<td  class="bs-checkbox">'+
+                                '<input name="showSelectItem" type="checkbox" value="'+ row.userId+'"/>'+
+                                '</td>'+
+                                '<td style="">'+ row.userId +'</td>'+
+                                '<td style="">'+ row.userName +'</td>'+
+                                '<td style="">'+ row.userEmail +'</td>'+
+                                '</tr>'
+                            )
+                        })
+                        var pageHtml = page_list(res.data.pageSize ,res.data.pageNum , res.data.total,10,"supermanager");
+                        $(".page-list").remove();//先清空div
+                        $('#divpagelist').after('<div class="page-list default">' + pageHtml + '</div>');
+                    }
+                }
+            });
+        }
+
+        //全选设置
+        $('#show-selectAll').click(function(){
+            $('input[name="showSelectItem"]').prop("checked",this.checked);
+            return true;
+        });
+        $(document).on('click','input[name="showSelectItem"]',function(){
+            $('#show-selectAll').prop("checked",$('input[name="showSelectItem"]').length == $('input[name="showSelectItem"]:checked').length ? true : false);
+        })
+
+        //修改管理员
+        $("#modifyUser").click(function () {
+            if($("#show input[name='showSelectItem']:checked").length==0){
+                layer.msg('请选择至少一个管理员',{ time: 1000});
+                return;
+            }
+            if($("#show input[name='showSelectItem']:checked").length>1){
+                layer.msg('一次只能修改一个管理员',{ time: 1000});
+                return;
+            }
+            var userId = $('[name="showSelectItem"]:checked').val();
+            var url = "/api/super/" + userId;
+            //获取选中管理员信息
+            $.ajax({
+                type: 'GET',
+                url: url,
+                dataType: "json",
+                success: function(res){
+                    if(res.msg == "success" ){
+                        layer.open({
+                            title: '修改用户',
+                            resize: false,
+                            content: '<div >' +
+                            '<form id="modifyForm" action="#"  class="fh5co-form animate-box fadeIn animated-fast" data-animate-effect="fadeIn" method="post">' +
+                            '<div class="form-group">' +
+                            '<label for="username">用户名</label>' +
+                            '<input type="text" class="form-control" minlength="2" id="modifyUsername" name="modifyUsername" value="'+ res.data.userName +'" autocomplete="off" />' +
+                            '<input type="hidden" id="modifyUserId" value="'+ res.data.userId +'"/>'+
+                            '</div>' +
+                            '<div class="form-group">' +
+                            '<label for="password" class="sr-only">密码</label>' +
+                            '<input type="password" class="form-control" id="modifyPassword" name="modifyPassword" autocomplete="off" value="'+ res.data.password +'"/>' +
+                            '</div>' +
+                            '<input type="submit" id="modifyBtn" value="确认" />'+
+                            '</form>' +
+                            '</div>',
+                            shadeClose: false,//设置点击弹出层外的地方关闭为false
+                            btn: null,
+                            success: function (layero, index) {
+                                $("#modifyBtn").click(function () {
+                                    //表单验证
+                                    $('#modifyForm').validate({
+                                        errorElement: 'span', //default input error message container
+                                        errorClass: 'help-block', // default input error message class
+                                        focusInvalid: false, // do not focus the last invalid input
+                                        rules: {
+                                            modifyUsername: {
+                                                required: true
+                                            },
+                                            modifyPassword: {
+                                                required: true
+                                            }
+                                        },
+                                        highlight: function(element) { // hightlight error inputs
+                                            $(element)
+                                                .closest('.form-group').addClass('has-error'); // set error class to the control group
+                                        },
+
+                                        success: function(label) {
+                                            label.closest('.form-group').removeClass('has-error');
+                                            label.remove();
+                                        },
+                                        //表单提交
+                                        submitHandler: function(form) {
+                                            var modifyUserId = $("#modifyUserId").val();
+                                            var modifyUsername = $("#modifyUsername").val();
+                                            var modifyPassword = $("#modifyPassword").val();
+                                            layer.close(index);
+                                            $.ajax({
+                                                type: 'PUT',
+                                                url: "/api/super/"+modifyUserId,
+                                                data: {
+                                                    userName:modifyUsername,
+                                                    password:modifyPassword
+                                                } ,
+                                                dataType: "json",
+                                                success: function(res){
+                                                    if(res.msg == "success"){
+                                                        layer.msg("修改成功",{time:1000},function () {
+                                                            window.location.href = "supermanager";
+                                                        })
+                                                    }else {
+                                                        layer.msg(res.msg);
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+                                })
+                            }
+                        });
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                }
+            });
+
+
+        })
+
+        //删除管理员操作
+        $('#deleteUser').click(function(){
+            if($("#show input[name='showSelectItem']:checked").length==0){
+                layer.msg('请选择至少一个管理员',{ time: 500});
+                return;
+            }
+            var userId = "";
+            $('[name="showSelectItem"]:checked').each(function(){
+                userId += $(this).val()+"@";
+            });
+            var url = "/api/super/" + userId.substring(0,userId.length-1);
+            layer.confirm("确定要删除所选管理员吗？","",function () {
+                $.ajax({
+                    type: 'DELETE',
+                    url: url,
+                    dataType: "json",
+                    success: function(res){
+                        if(res.msg == "success" ){
+                            layer.msg("删除成功！",{ time: 500},function () {
+                                window.location.href = "supermanager";
+                            });
+                        }else{
+                            layer.msg(res.msg);
+                        }
+                    }
+                });
+            });
+        });
+
+        //搜索
+        $("#searchBtn").click(function () {
+            var searchContent =$("#searchContent").val();
+            if(searchContent == null){
+                layer.msg("请输入搜索内容",{time:500});
+                return;
+            }else{
+                //获取搜索结果管理员信息
+                $.ajax({
+                    type: 'GET',
+                    url: "/api/super",
+                    data: {
+                        page:1,
+                        pageSize:10,
+                        userName: searchContent,
+                    } ,
+                    dataType: "json",
+                    success: function(res){
+                        if(res.code == 1){
+                            var userList = res.data.list;
+                            $(".show-tbody").empty();
+                            //循环为表格添加数据
+                            $.each(userList,function(i,row){
+                                $(".show-tbody").append(
+                                    '<tr data-index="'+(i+1)+'">'+
+                                    '<td  class="bs-checkbox">'+
+                                    '<input name="showSelectItem" type="checkbox" value="'+ row.userId+'"/>'+
+                                    '</td>'+
+                                    '<td style="">'+ row.userId +'</td>'+
+                                    '<td style="">'+ row.userName +'</td>'+
+                                    '<td style="">'+ row.userEmail +'</td>'+
+                                    '</tr>'
+                                )
+                            })
+                            var pageHtml = page_list(res.data.pageSize ,res.data.pageNum , res.data.total,10,"supermanager",searchContent);
+                            $(".page-list").remove();//先清空div
+                            $('#divpagelist').after('<div class="page-list default">' + pageHtml + '</div>');
+                        }
+                    }
+                });
+            }
+        })
+
+        //新增管理员
+        $("#addUser").click(function(){
+            layer.open({
+                title: '新增管理员',
+                resize: false,
+                content: '<div >' +
+                '<form id="addForm" action="#"  class="fh5co-form animate-box fadeIn animated-fast" data-animate-effect="fadeIn" method="post">' +
+                '<div class="form-group">' +
+                '<label for="username" class="sr-only">管理员姓名</label>' +
+                '<input type="text" class="form-control" minlength="2" id="addUsername" name="addUsername" placeholder="请输入管理员姓名" autocomplete="off" />' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="password" class="sr-only">密码</label>' +
+                '<input type="password" class="form-control" id="addPassword" name="addPassword" placeholder="请输入密码" autocomplete="off" />' +
+                '</div>' +
+                '<input type="submit" id="addBtn" value="确认" />'+
+                '</form>' +
+                '</div>',
+                shadeClose: false,//设置点击弹出层外的地方关闭为false
+                btn: null,
+                success: function (layero, index) {
+                    $("#addBtn").click(function () {
+                        //表单验证
+                        $('#addForm').validate({
+                            errorElement: 'span', //default input error message container
+                            errorClass: 'help-block', // default input error message class
+                            focusInvalid: false, // do not focus the last invalid input
+                            rules: {
+                                addUsername: {
+                                    required: true
+                                },
+                                addPassword: {
+                                    required: true
+                                },
+                            },
+                            highlight: function(element) { // hightlight error inputs
+                                $(element)
+                                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+                            },
+
+                            success: function(label) {
+                                label.closest('.form-group').removeClass('has-error');
+                                label.remove();
+                            },
+                            //表单提交
+                            submitHandler: function(form) {
+                                var addUsername = $("#addUsername").val();
+                                var addPassword = $("#addPassword").val();
+                                layer.close(index);
+                                $.post('/api/super',{
+                                    userName:addUsername,
+                                    password:addPassword,
+                                },function(res){
+
+                                    if(res.msg == "success"){
+                                        layer.msg("新增成功！",{time:1000},function () {
+                                            window.location.href = "supermanager";
+                                        });
+                                    }
+                                    else{
+                                        //debugger
+                                        layer.msg(res.msg);
+                                    }
+                                });
+                            }
+                        });
+                    })
+                }
+            });
+        });
+
+
+    });
+</script>
+</body>
 </html>

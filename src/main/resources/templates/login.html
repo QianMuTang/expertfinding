@@ -20,14 +20,15 @@
                     <h2>登录</h2>
                     <div class="form-group">
                         <label for="username" class="sr-only">用户名</label>
-                        <input type="text" class="form-control" id="username" placeholder="请输入用户名" autocomplete="off" />
+                        <input type="text" class="form-control" id="username"  placeholder="请输入用户名" autocomplete="off" />
                     </div>
                     <div class="form-group">
                         <label for="password" class="sr-only">密码</label>
                         <input type="password" class="form-control" id="password" placeholder="请输入密码" autocomplete="off" />
                     </div>
+                    <div id="msgtips" class="tip-box"></div>
                     <div class="form-group">
-                        <label for="remember"><input type="checkbox" id="remember" />记住我</label>
+                        <label for="remember"><input type="checkbox" id="remember"/>记住我</label>
                     </div>
                     <div class="form-group">
                         <p>没有注册? <a href="/register">注册</a></p>
@@ -47,7 +48,7 @@
 
     <script src="../static/js/jquery-1.11.1.min.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
-
+    <script src="../static/js/commen.js"></script>
     <script>
 
 
@@ -55,6 +56,12 @@
 
                 var username = $('#username').val();
                 var password = $('#password').val();
+                var remember = $('#remember').is(":checked"); //true选中；false不选
+                if(username=="" || password==""){
+			        $("#msgtips").show();
+			        $("#msgtips").text("请填写用户名和登录密码！");
+			        return false;
+		        }
                 $.ajax({
                     type: 'POST',
                     dataType: 'JSON',
@@ -64,19 +71,21 @@
                         password:password
                     },
                     success: function (res) {
+                        if(remember == true){
+                            setCookies("userName",username);
+                            setCookies("role",res.data.role);
+                        }
                        if(res.code == 1){
                         if(res.data.role =="[ROLE_ADMIN]"){
-                          window.location.href='/manager ';
+                          window.location.href='/manager';
                          }
-                           if(res.data.role =="[ROLE_SUPER]"){
-                               window.location.href='/supermanager ';
-                           }
-
+                        if(res.data.role =="[ROLE_SUPER]"){
+                           window.location.href='/supermanager ';
+                        }
+                        if(res.data.role =="[ROLE_USER]"){
+                            window.location.href='/userindex ';
+                        }
                        }
-
-
-//
-
                     }
                 })
 

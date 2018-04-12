@@ -39,7 +39,17 @@ public class Result {
     @Column(name = "author_ranking")
     private Integer authorRanking;
 
-    public Result(Long resultId, String resultName, String resultDesc, Integer resultType, Date resultTime, Integer citedNum, Integer award, String score, Integer pubilcationId, Integer authorRanking) {
+    private String keyword;
+
+    @Column(name = "classify_num")
+    private String classifyNum;
+
+    private String link;
+
+    @Column(name = "apply_num")
+    private String applyNum;
+
+    public Result(Long resultId, String resultName, String resultDesc, Integer resultType, Date resultTime, Integer citedNum, Integer award, String score, Integer pubilcationId, Integer authorRanking, String keyword, String classifyNum, String link, String applyNum) {
         this.resultId = resultId;
         this.resultName = resultName;
         this.resultDesc = resultDesc;
@@ -50,6 +60,10 @@ public class Result {
         this.score = score;
         this.pubilcationId = pubilcationId;
         this.authorRanking = authorRanking;
+        this.keyword = keyword;
+        this.classifyNum = classifyNum;
+        this.link = link;
+        this.applyNum = applyNum;
     }
 
     public Result() {
@@ -202,5 +216,61 @@ public class Result {
      */
     public void setAuthorRanking(Integer authorRanking) {
         this.authorRanking = authorRanking;
+    }
+
+    /**
+     * @return keyword
+     */
+    public String getKeyword() {
+        return keyword;
+    }
+
+    /**
+     * @param keyword
+     */
+    public void setKeyword(String keyword) {
+        this.keyword = keyword == null ? null : keyword.trim();
+    }
+
+    /**
+     * @return classify_num
+     */
+    public String getClassifyNum() {
+        return classifyNum;
+    }
+
+    /**
+     * @param classifyNum
+     */
+    public void setClassifyNum(String classifyNum) {
+        this.classifyNum = classifyNum == null ? null : classifyNum.trim();
+    }
+
+    /**
+     * @return link
+     */
+    public String getLink() {
+        return link;
+    }
+
+    /**
+     * @param link
+     */
+    public void setLink(String link) {
+        this.link = link == null ? null : link.trim();
+    }
+
+    /**
+     * @return apply_num
+     */
+    public String getApplyNum() {
+        return applyNum;
+    }
+
+    /**
+     * @param applyNum
+     */
+    public void setApplyNum(String applyNum) {
+        this.applyNum = applyNum == null ? null : applyNum.trim();
     }
 }

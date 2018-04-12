@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <link rel="stylesheet" href="../static/css/iconfont.css"/>
+    <link rel="stylesheet" href="../static/css/pagination.css" />
+</head>
+<body>
+    <div class="header">
+    <div class="container">
+        <div class="header-nav" >
+            <nav class="navbar navbar-default">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header" >
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="logo">
+                        <img src="../static/images/logo.ico" class="img-rounded" alt="Responsive image" />
+                        <a class="navbar-brand" href="../templates/index.html" >全球科技人才跟踪系统</a>
+                    </div>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav ">
+                        <li>
+                            <div class="form-inline "  >
+                                <div class="form-group" id="normal_search" >
+                                    <div class="row">
+                                        <div class="col-md-5" style="padding-right: 0">
+                                            <select id="selectNameOrField" class="form-control" style="margin: 30px 0px;width: 100%;">
+                                                <option value="field">研究领域</option>
+                                                <option value="expertName">专家姓名</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <input type="text" id="searchContent" oninput="onInput(event)" class="form-control" placeholder="无论你想到什么" style="width: 100%;margin:30px 0;" />
+                                            <ul id="searchAssociation" style="display: none">
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="advanced_search" style="width: 380px;display: none;">
+                                    <div class="row" style="margin:30px 0;">
+                                        <div class="col-md-4" >
+                                            <input type="text" class="form-control" style="width: 120px;" placeholder="专业领域" />
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" style="width: 120px;" placeholder="姓名" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" style="width: 120px;" placeholder="地域" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" id="searchBtn" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></button>
+                                <button id="switch_search" class="btn btn-primary" style="margin-right: 40px;"><i class="glyphicon glyphicon-retweet"></i></button>
+                            </div>
+                        </li>
+                        <li class="cl-effect-14"><a id="loginBtn" href="javascript:void(0);" onclick="loginCheck()" class="active">登录</a></li>
+                        <li class="cl-effect-14"><a href="/register">注册</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </nav>
+        </div>
+    </div>
+</div>
+    <div class="searchResult" style="margin-bottom: 80px;">
+        <div class="container">
+            <div style="display: flex; flex-direction: row;" class="col-lg-12 no-padding">
+                <div style="padding-left: 0px;width:100%;">
+                    <h5 style="margin-top: 5px;margin-bottom: 15px;margin-left:3px" class="font-sm no-padding ng-binding">
+                        搜索内容：<span id="keyword" class="semi-bold ng-binding ng-scope" style="color: #B46425;font-weight: bold"></span>
+                        ，共 <small class="ng-binding ng-scope" id="totalNum"></small> 条结果
+                    </h5>
+                    <div class="nav-category search-navbar collapse navbar-collapse bg-color-white font-xs ng-scope">
+                        <h6>贡献</h6>
+                        <ul style="height:40px;overflow-y:hidden;margin-top:0;margin-bottom:0" class="nav1 navbar-nav1 list-inline">
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">大于等于60 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">50-59 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">40-49 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">30-39 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">20-29 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">10-19 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">小于10 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="nav-category search-navbar collapse navbar-collapse bg-color-white font-xs ng-scope">
+                        <h6>性别</h6>
+                        <ul style="height:40px;overflow-y:hidden;margin-top:0;margin-bottom:0" class="nav1 navbar-nav1 list-inline">
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">男 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">女 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="nav-category search-navbar collapse navbar-collapse bg-color-white font-xs ng-scope">
+                        <h6>语言</h6>
+                        <ul style="height:40px;overflow-y:hidden;margin-top:0;margin-bottom:0" class="nav1 navbar-nav1 list-inline">
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">英文 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">中文 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="nav-category search-navbar collapse navbar-collapse bg-color-white font-xs ng-scope">
+                        <h6>地域</h6>
+                        <ul style="height:40px;overflow-y:hidden;margin-top:0;margin-bottom:0" class="nav1 navbar-nav1 list-inline">
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">东北 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">华东 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">华北 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">华中 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">华南 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">西南 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);" class="text-xs ng-binding">西北 (
+                                    <strong>6</strong>
+                                    <span>)</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <hr style="margin-bottom: 10px;border-bottom: 1px solid #aaa;"/>
+                    <div style=";background-color:#f7f7f7;box-shadow:0 0 1px lightgray;padding-left:0;width:100%;margin-top:5px;" class="nav-category search-navbar collapse navbar-collapse font-xs">
+                        <h6>相关排序</h6>
+                        <ul style="height:40px;overflow-y:hidden;margin-top:0;margin-bottom:0" class="nav1 navbar-nav1 list-inline">
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);">
+                                    <span>贡献</span>
+                                </a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);">
+                                    <span>引用</span>
+                                </a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);">
+                                    <span>论文</span>
+                                </a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);">
+                                    <span>专利</span>
+                                </a>
+                            </li>
+                            <li style="margin: 0">
+                                <a href="javascript:void(0);">
+                                    <span>获奖</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div>
+                <ul class="expertList" id="expertList">
+                    <!--<li>-->
+                        <!--<div class="row">-->
+                            <!--<b class="col-md-2"><img src="../images/li.png" /></b>-->
+                            <!--<div class="col-md-10">-->
+                                <!--<h3><a href="/expert/detail/3">李千目 </a></h3>-->
+                                <!--<div style="color: #B46425 ;margin-top: 10px;">-->
+                                    <!--<span style="font-size: small;font-weight: bold">专家评分： 9 </span><i class="iconfont icon-vertical_line"></i>-->
+                                    <!--<span style="font-size: small;font-weight: bold">论文： 100 </span><i class="iconfont icon-vertical_line"></i>-->
+                                    <!--<span style="font-size: small;font-weight: bold">引用： 1000 </span>-->
+                                <!--</div>-->
+                                <!--<div class="employerInfo"><i class="iconfont icon-medtitle"></i>职称：教授</div>&nbsp;&nbsp;-->
+                                <!--<div class="employerInfo"><i class="iconfont icon-loufang"></i>机构：南京理工大学</div>-->
+                                <!--<div class="tag">-->
+                                    <!--<span>机会网络</span>-->
+                                    <!--<span>时延容忍网络</span>-->
+                                    <!--<span>通信技术</span>-->
+                                    <!--<span>信息安全</span>-->
+                                    <!--<span>故障诊断</span>-->
+                                    <!--<span>网络故障诊断</span>-->
+                                <!--</div>-->
+                                <!--<div class="likeStar"><i class="iconfont icon-shoucang"></i></div>-->
+                            <!--</div >-->
+                        <!--</div>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+            <div id="divpagelist"></div>
+        </div>
+    </div>
+<script src="../static/js/jquery-1.11.1.min.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+<script src="../static/js/jquery.wmuSlider.js"></script>
+<script src="../static/js/commen.js"></script>
+<script src="../static/js/index.js"></script><script src="../static/js/layer/layer.js"></script>
+<script>
+    //获取url传的参数
+    var page = getUrlParam("page");
+    if(page == "" || page ==null){
+        page = 1;
+    }
+    var type = getUrlParam("type");
+    //搜索内容回填
+    $("#selectNameOrField").val(type);
+    var searchContent = decodeURI(getUrlParam("searchContent"));
+    $("#searchContent").val(searchContent);
+    //搜索小标题的搜索内容
+    $("#keyword").text(searchContent)
+    if(type == "field"){
+        $.ajax({
+            type: 'GET',
+            url: "/api/expert",
+            data: {
+                field:searchContent,
+                page:page,
+                pageSize:10
+            } ,
+            dataType: "json",
+            success: function(res){
+                if(res.msg == "success"){
+                    $("#totalNum").text(res.data.total);
+                    var expertList = res.data.list;
+                    //循环为表格添加数据
+                    $.each(expertList,function(i,row){
+                        $("#expertList").append(
+                            '<li>' +
+                                '<div class="row">' +
+                                    '<b class="col-md-2"><img src="/ico/'+ row.expert.icoName +'" /></b>' +
+                                    '<div class="col-md-10">' +
+                                        '<h3>'+ '<a href="/expert/detail?expertId='+ row.expert.expertId +'">'+ row.expert.expertName +'</a></h3>' +
+                                        '<div style="color: #B46425 ;margin-top: 10px;">' +
+                                        '<span style="font-size: small;font-weight: bold">专家评分： '+ row.expert.expertScore +' </span><i class="iconfont icon-vertical_line"></i>' +
+                                            '<span style="font-size: small;font-weight: bold">论文： '+ row.expert.paperNum +'</span><i class="iconfont icon-vertical_line"></i>' +
+                                            '<span style="font-size: small;font-weight: bold">引用： '+ row.expert.hIndex +' </span>' +
+                                        '</div>' +
+                                        '<div class="employerInfo"><i class="iconfont icon-medtitle"></i>职称：'+ row.expert.professionalTitle +'</div>&nbsp;&nbsp;' +
+                                        '<div class="employerInfo"><i class="iconfont icon-loufang"></i>机构：'+ row.expert.employer +'</div>' +
+                                        '<div class="tag">' +
+                                            getTags(row.expert.tag) +
+                                        '</div>' +
+                                        '<div class="likeStar"><i class="iconfont icon-shoucang"></i></div>' +
+                                    '</div >' +
+                                '</div>' +
+                            '</li>'
+                        )
+                    });
+                    var pageHtml = page_list(res.data.pageSize ,res.data.pageNum , res.data.total,10,"expert",encodeURI(encodeURI(searchContent)),type);
+                    $(".page-list").remove();//先清空div
+                    $('#divpagelist').after('<div class="page-list default">' + pageHtml + '</div>');
+                }
+            }
+        });
+    }else {
+        $.ajax({
+            type: 'GET',
+            url: "/api/expert",
+            data: {
+                expertName:searchContent,
+                page:page,
+                pageSize:10
+
+            } ,
+            dataType: "json",
+            success: function(res){
+                if(res.msg == "success"){
+                    $("#totalNum").text(res.data.total);
+                    var expertList = res.data.list;
+                    //循环为表格添加数据
+                    $.each(expertList,function(i,row){
+                        $("#expertList").append(
+                            '<li>' +
+                                '<div class="row">' +
+                                    '<b class="col-md-2"><img src="/ico/'+ row.expert.icoName +'" /></b>' +
+                                    '<div class="col-md-10">' +
+                                        '<h3>'+ '<a href="/expert/detail?expertId='+ row.expert.expertId +'">'+ row.expert.expertName +'</a></h3>' +
+                                        '<div style="color: #B46425 ;margin-top: 10px;">' +
+                                            '<span style="font-size: small;font-weight: bold">专家评分： '+ row.expert.expertScore +' </span><i class="iconfont icon-vertical_line"></i>' +
+                                            '<span style="font-size: small;font-weight: bold">论文： '+ row.expert.paperNum +'</span><i class="iconfont icon-vertical_line"></i>' +
+                                            '<span style="font-size: small;font-weight: bold">引用： '+ row.expert.hIndex +' </span>' +
+                                        '</div>' +
+                                        '<div class="employerInfo"><i class="iconfont icon-medtitle"></i>职称：'+ row.expert.professionalTitle +'</div>&nbsp;&nbsp;' +
+                                        '<div class="employerInfo"><i class="iconfont icon-loufang"></i>机构：'+ row.expert.employer +'</div>' +
+                                        '<div class="tag">' +
+                                                getTags(row.expert.tag) +
+                                       '</div>' +
+                                        '<div class="likeStar"><i class="iconfont icon-shoucang"></i></div>' +
+                                    '</div >' +
+                                '</div>' +
+                            '</li>'
+                        );
+                    });
+                    var pageHtml = page_list(res.data.pageSize ,res.data.pageNum , res.data.total,10,"expert",encodeURI(encodeURI(searchContent)),type);
+                    $(".page-list").remove();//先清空div
+                    $('#divpagelist').after('<div class="page-list default">' + pageHtml + '</div>');
+
+                }
+            }
+        });
+    }
+
+    //追踪的星星
+
+
+
+</script>
+</body>
+</html>

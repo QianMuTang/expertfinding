@@ -18,12 +18,14 @@ public class StartSpiderUtilTest {
     @Value("${web.data-path}")
     private String data_path;
 
+    @Value("${web.aminer-spider}")
+    private String spider_name;
+
     @Test
     public void startSpiderUtilTest(){
         String expert_name = "李千目";
-        String spider_name = "aminer.py";
-
-        new SpiderUtil().multiThreadSpider(spider_path, data_path, spider_name, expert_name);
+        System.out.println("爬虫名"+spider_name);
+        System.out.println(new SpiderUtil().multiThreadSpider(spider_path, data_path, spider_name, expert_name));
 
 //        System.out.println(new SpiderUtil().spider(spider_path, spider_name, expert_name));
     }
